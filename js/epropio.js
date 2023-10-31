@@ -7,7 +7,7 @@ function fechaAleatoria() {
 }
 
 function generarDatos() {
-    const reservas = 25;
+    const reservas = 50;
     const nombresLista = ["Juan", "María", "Pedro", "Ana", "Luis", "José", "Carmen", "David", "Marta", "Antonio", "Paula", "Francisco", "Isabel", "Miguel", "Laura", "Daniel", "Elena", "Jorge", "Sara", "Álvaro", "Cristina", "Iván", "Andrea", "Pablo", "Teresa", "Alejandro", "Sandra", "Daniela", "Sergio", "Noelia", "Jonathan", "Raquel", "Carlos", "Alba", "Adrián", "Lucía", "Javier", "Eva", "Óscar", "Marta", "Diego", "Beatriz", "Gonzalo", "Elena", "Rodrigo", "Alba", "Jonathan", "Raquel", "Carlos", "Alba", "Adrián", "Lucía", "Javier", "Eva", "Óscar", "Marta", "Diego", "Beatriz", "Gonzalo", "Elena", "Rodrigo", "Alba", "Jonathan", "Raquel", "Carlos", "Alba", "Adrián", "Lucía", "Javier", "Eva", "Óscar", "Marta", "Diego", "Beatriz", "Gonzalo", "Elena", "Rodrigo"]; // Lista de nombres
 
     const personas = [];
@@ -31,8 +31,34 @@ function generarDatos() {
             <td>${estados[Math.floor(Math.random() * estados.length)]}</td>
             <td>${fechas[i].toLocaleDateString()}</td>
             <td>${horas[i]}:00</td>
-            <td>${generarEstado()}</td>
+            <td>
+                <a href="#" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-100">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </a>
+                <a href="#" class="btn btn-danger btn-icon-split">
+                    <span class="icon text-white-100">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                </a>
+            </td>
           `;
+          /*
+          <td>${generarEstado()}</td>
+          <td>
+                <a href="#" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-100">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </a>
+                <a href="#" class="btn btn-danger btn-icon-split">
+                    <span class="icon text-white-100">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                </a>
+            </td>
+            */
         document.querySelector("table tbody").appendChild(fila);
     }
 
@@ -51,7 +77,8 @@ function generarDatos() {
 }
 
 generarDatos();
-$('#dataTable').dataTable({
+
+$('#dataTableSA').dataTable({
     "order": [[3, 'asc'], [4, 'asc']]
 });
 
@@ -59,7 +86,8 @@ function formatDate(date) {
     return moment(date).format('DD/MM/YY');
 }
 // NO tiene sentido hasta que no funcione la BBDD
-function contarReservasPendientes(idTabla) {
+/*function contarReservasPendientes(idTabla) {
+    console.log("chack1")
     // Obtener el elemento de la tabla
     const table = document.getElementById(idTabla);
 
@@ -81,4 +109,37 @@ function contarReservasPendientes(idTabla) {
     // Asignar el valor del contador al elemento con el ID contadorPendiente
     document.getElementById("contadorPendiente").textContent = contador;
 }
-contarReservasPendientes("dataTable");
+contarReservasPendientes('#dataTable');
+*/
+/*----------------------------------------------------- */
+/*function borrarFilasAntiguas(tabla) {
+    // Obtenemos la fecha y hora actuales
+    console.log("chack2")
+    const fechaActual = new Date();
+    const horaActual = fechaActual.getHours() + ":" + fechaActual.getMinutes() + ":" + fechaActual.getSeconds();
+    
+    // Recorremos las filas de la tabla
+    for (const fila of tabla.querySelectorAll("tr")) {
+      // Obtenemos la hora de la cuarta columna
+      if (fila.querySelectorAll("td").length >= 4 && fila.querySelectorAll("td")[3].textContent !== "") {
+        console.log("La fila tiene cuatro columnas y la cuarta columna no está vacía")
+      } else {
+        console.log("La fila no tiene cuatro columnas o la cuarta columna está vacía")
+      }
+      const hora = fila.querySelectorAll("td")[4].textContent
+      // Si la hora es anterior a la fecha y hora en curso, borramos la fila
+      if (hora < horaActual) {
+        fila.remove();
+      }
+      console.log("chack3")
+    }
+  }
+ 
+  const tabla = document.querySelector("#dataTableSA");
+  
+  // Borramos las filas antiguas
+  borrarFilasAntiguas(tabla);*/
+
+  $('#dataTable').dataTable({
+    "order": [[3, 'asc'], [4, 'asc']]
+});

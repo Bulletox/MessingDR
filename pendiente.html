@@ -44,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -55,13 +55,6 @@
                 <a class="nav-link" href="pendiente.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Pendientes</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-            <li class="nav-item">
-                <a class="nav-link" href="pendiente.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>KPI</span></a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -306,102 +299,17 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Pendienstes</h1>
                         <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">aforo
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">70%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 70%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Reservas pendientes</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="contadorPendiente">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <!-- Page Heading -->
                     <!-- Tabla -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">RESERVAS PARA HOY</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Solicitud de reservas</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -413,12 +321,11 @@
                                             <th>Zona</th>
                                             <th>Fecha</th>
                                             <th>Hora</th>
-                                            <th>Asistencia</th>
+                                            <th>Estado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <!--
-                                            <tr>
+                                         <!--<tr>
                                             <td>Juan Pérez</td>
                                             <td>Reservar mesa para 2</td>
                                             <td>Terraza</td>
@@ -436,7 +343,62 @@
                                         </a>
                                         </td>
                                         </tr>
-                                    -->
+                                        <tr>
+                                            <td>María García</td>
+                                            <td>Reservar mesa para 4</td>
+                                            <td>Comedor</td>
+                                            <td>04/11/23</td>
+                                            <td>13:30</td>
+                                            <td>Pendiente de confirmación</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pedro López</td>
+                                            <td>Reservar mesa para 6</td>
+                                            <td>Terraza</td>
+                                            <td>05/11/23</td>
+                                            <td>14:30</td>
+                                            <td>Cancelado</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ana Sánchez</td>
+                                            <td>Reservar mesa para 8</td>
+                                            <td>Comedor</td>
+                                            <td>06/11/23</td>
+                                            <td>21:00</td>
+                                            <td>Pendiente de confirmación</td>
+                                        </tr>
+                                        <tr>
+                                            <td>David Rodríguez</td>
+                                            <td>Reservar mesa para 10</td>
+                                            <td>Terraza</td>
+                                            <td>06/11/23</td>
+                                            <td>15:00</td>
+                                            <td>Confirmado</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Elena González</td>
+                                            <td>Reservar mesa para 12</td>
+                                            <td>Comedor</td>
+                                            <td>08/11/23</td>
+                                            <td>19:30</td>
+                                            <td>Cancelado</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Francisco Martínez</td>
+                                            <td>Reservar mesa para 14</td>
+                                            <td>Terraza</td>
+                                            <td>09/11/23</td>
+                                            <td>22:00</td>
+                                            <td>Pendiente de confirmación</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Isabel Ruiz</td>
+                                            <td>Reservar mesa para 16</td>
+                                            <td>Comedor</td>
+                                            <td>10/11/23</td>
+                                            <td>12:00</td>
+                                            <td>Confirmado</td>
+                                        </tr> -->
                                     </tbody>
                                 </table>
 
