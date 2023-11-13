@@ -68,16 +68,16 @@
   padding: 18px 15px;
   outline: none;
   text-align: center;
-  width: 200px;
+  width: 500px;
   transition: 0.5s;
 }
 
 .input[type="text"]:hover {
-  width: 240px;
+  width: 540px;
 }
 
 .input[type="text"]:focus {
-  width: 280px;
+  width: 580px;
 }
 /*--------------------------------------------------*/
 .styled-button {
