@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+  }
+  
+  #carousel-container {
+    width: 70%;
+    max-width: 500px;
+    overflow: hidden;
+    position: relative;
+    margin: 20px auto;
+  }
+  
+  #carousel-background {
+    position: absolute;
+    top: -60px; /* Ajusta según cuánto quieres que sobresalga hacia arriba */
+    left: -60px; /* Ajusta según cuánto quieres que sobresalga hacia la izquierda */
+    right: -60px; /* Ajusta según cuánto quieres que sobresalga hacia la derecha */
+    bottom: -60px; /* Ajusta según cuánto quieres que sobresalga hacia abajo */
+    background-color: #ff0000; /* Cambia el color de fondo según tus preferencias */
+    z-index: -1;
+  }
+  
+  #carousel-content {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carousel-item {
+    width: 100%;
+    flex: 0 0 auto;
+    overflow: hidden;
+  }
+  
+  .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  #prev-btn, #next-btn {
+    position: absolute;
+    top: 40%;
+    font-size: 1.5em;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+  }
+  
+  #prev-btn {
+    left: 10px;
+  }
+  
+  #next-btn {
+    right: 10px;
+  }
+  
