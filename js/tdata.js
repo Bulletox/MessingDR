@@ -7,7 +7,7 @@ function fechaAleatoria() {
 }
 
 function generarDatos() {
-    const reservas = 500;
+    const reservas = 50;
     const nombresLista = ["Juan", "María", "Pedro", "Ana", "Luis", "José", "Carmen", "David", "Marta", "Antonio", "Paula", "Francisco", "Isabel", "Miguel", "Laura", "Daniel", "Elena", "Jorge", "Sara", "Álvaro", "Cristina", "Iván", "Andrea", "Pablo", "Teresa", "Alejandro", "Sandra", "Daniela", "Sergio", "Noelia", "Jonathan", "Raquel", "Carlos", "Alba", "Adrián", "Lucía", "Javier", "Eva", "Óscar", "Marta", "Diego", "Beatriz", "Gonzalo", "Elena", "Rodrigo", "Alba", "Jonathan", "Raquel", "Carlos", "Alba", "Adrián", "Lucía", "Javier", "Eva", "Óscar", "Marta", "Diego", "Beatriz", "Gonzalo", "Elena", "Rodrigo", "Alba", "Jonathan", "Raquel", "Carlos", "Alba", "Adrián", "Lucía", "Javier", "Eva", "Óscar", "Marta", "Diego", "Beatriz", "Gonzalo", "Elena", "Rodrigo"]; // Lista de nombres
 
     const personas = [];
@@ -24,23 +24,42 @@ function generarDatos() {
     const nombres = nombresAleatorios();
 
     for (let i = 0; i < reservas; i++) {
-        const fila = document.createElement("item");
+        const fila = document.createElement("tr");
         fila.innerHTML = `
- 
-         <id_usuario>${i+1}</id_usuario>
-         <nombre>${nombres[i] + " " + nombres[Math.floor(Math.random() * nombres.length)]}</nombre>
-         <apellidos>${nombres[i] + " " + nombres[Math.floor(Math.random() * nombres.length)]}</apellidos> 
-         <correo>${nombres[i]+nombres[Math.floor(Math.random() * nombres.length)]+"@gmail.com"}</correo>
-         <telefono>${i}</telefono>
-         <id_reserva></id_reserva>
-         <fecha_reserva>${fechas[i].toLocaleDateString()}</fecha_reserva>
-         <num_personas>${personas[i]}</num_personas>
-         <estado>TRUE</estado> 
-
+            <td>${nombres[i] + " " + nombres[Math.floor(Math.random() * nombres.length)]}</td>
+            <td>${"Reservar mesa para " + personas[i]}</td>
+            <td>${estados[Math.floor(Math.random() * estados.length)]}</td>
+            <td>${fechas[i].toLocaleDateString()}</td>
+            <td>${horas[i]}:00</td>
+            <td>
+                <a href="#" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-100">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </a>
+                <a href="#" class="btn btn-danger btn-icon-split">
+                    <span class="icon text-white-100">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                </a>
+            </td>
           `;
-
-        //document.querySelector("table tbody").appendChild(fila);
-        document.querySelector("items").appendChild(fila);
+          /*
+          <td>${generarEstado()}</td>
+          <td>
+                <a href="#" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-100">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </a>
+                <a href="#" class="btn btn-danger btn-icon-split">
+                    <span class="icon text-white-100">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                </a>
+            </td>
+            */
+        document.querySelector("table tbody").appendChild(fila);
     }
 
     function nombresAleatorios() {
@@ -121,6 +140,6 @@ contarReservasPendientes('#dataTable');
   // Borramos las filas antiguas
   borrarFilasAntiguas(tabla);*/
 
-$('#dataTable').dataTable({
+  $('#dataTable').dataTable({
     "order": [[3, 'asc'], [4, 'asc']]
 });

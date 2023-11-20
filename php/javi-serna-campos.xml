@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <items> 
+     <item>
+         <id_usuario></id_usuario>
+         <nombre></nombre>
+         <apellidos></apellidos> 
+         <correo></correo>
+         <telefono></telefono>
+         <id_reserva></id_reserva>
+         <fecha_reserva></fecha_reserva>
+         <num_personas></num_personas>
+         <estado></estado> 
+    </item>
+
+ </items>
