@@ -1,57 +1,211 @@
 body {
-    margin: 0;
-  }
-  
-  #carousel-container {
-    width: 70%;
-    max-width: 500px;
-    overflow: hidden;
-    position: relative;
-    margin: 20px auto;
-  }
-  
-  #carousel-background {
-    position: absolute;
-    top: -60px; /* Ajusta según cuánto quieres que sobresalga hacia arriba */
-    left: -60px; /* Ajusta según cuánto quieres que sobresalga hacia la izquierda */
-    right: -60px; /* Ajusta según cuánto quieres que sobresalga hacia la derecha */
-    bottom: -60px; /* Ajusta según cuánto quieres que sobresalga hacia abajo */
-    background-color: #ff0000; /* Cambia el color de fondo según tus preferencias */
-    z-index: -1;
-  }
-  
-  #carousel-content {
+  text-align: center;
+  font-family: 'Varela Round', ubuntu, segoe ui, arial, sans-serif;
+}
+.carrousel {
+  width: 900px;
+  height: calc(450px);
+  margin: auto;
+  font-size: 0;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+
+}
+
+.carrousel .screens {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  width: 900px;
+  height: 600px;
+  position: relative;
+  transform: translate(0%,-30%);
+}
+.carrousel .screens > li {
+  width: 0%;
+  height: 100%;
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  font-size: 15px;
+  overflow: hidden;
+  background: #bbb;
+  border-radius: 10px;
+  opacity: 0;
+  filter: blur(5px);
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  transform: translate(50%,0);
+  transition: all .7s;
+  pointer-events: none;
+}
+.carrousel .screens > li:hover {
+  filter: none;
+  opacity: 1;
+}
+.carrousel .screens > li.active {
+  opacity: 1;
+  filter: none;
+  width: 70%;
+  height: 70%;
+  z-index: 100;
+  transform: none;
+  transform: translate(20%,0);
+}
+.carrousel .screens > li.active, .carrousel .screens > li.left, .carrousel .screens > li.right {
+  pointer-events: all;
+}
+.carrousel .screens > li.left, .carrousel .screens > li.right {
+  transform: translate(0%,0);
+  opacity: .5;
+}
+.carrousel .screens > li.left {
+  transform: translate(0%,0);
+}
+.carrousel .screens > li.right {
+  transform: translate(100%,0);
+}
+.carrousel .screens > li p {
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  height: 100%;
+  color: #fff;
+  font-size: 20px;
+  pointer-events: none;
+}
+.carrousel .pagination {
+  list-style: none;
+  padding: 5px;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.carrousel .pagination li {
+  display: inline-block;
+  vertical-align: middle;
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  opacity: .3;
+  cursor: pointer;
+  background: #000;
+  border-radius: 100%;
+  transition: all .2s;
+  background-size: cover;
+  background-position: center;
+}
+.carrousel .pagination li:hover, .carrousel .pagination li.active {
+  opacity: 1;
+}
+#s1 {
+  background-image: url('img/imglanding/goiko/goikogrill.jpg');
+    background-size: cover;
+    background-position: center;
     display: flex;
-    transition: transform 0.5s ease-in-out;
-  }
-  
-  .carousel-item {
-    width: 100%;
-    flex: 0 0 auto;
-    overflow: hidden;
-  }
-  
-  .carousel-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  #prev-btn, #next-btn {
-    position: absolute;
-    top: 40%;
-    font-size: 1.5em;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: white;
-  }
-  
-  #prev-btn {
-    left: 10px;
-  }
-  
-  #next-btn {
-    right: 10px;
-  }
-  
+    justify-content: center;
+    align-items: center;
+}
+#s2 {
+  background-image: url('img/imglanding/goiko/hamburguesaKevin.jpg');
+  background-size: cover;
+  background-position: center;
+}
+#s3 {
+  background-image: url('img/imglanding/goiko/hamburguesaYankee-1.jpg');
+  background-size: cover;
+  background-position: center;
+}
+#s4 {
+  background-image: url('img/imglanding/goiko/hamburguesa6.jpg');
+  background-size: cover;
+  background-position: center;
+}
+#s5 {
+  background-image: url('img/imglanding/goiko/locall.jpg');
+  background-size: cover;
+  background-position: center;
+}
+/* #s6 {
+  background-image: url(https://doocode.xyz/res/img/backgrounds/DCG29.png);
+  background-size: cover;
+  background-position: center;
+}
+#s7 {
+  background-image: url(https://doocode.xyz/res/img/backgrounds/DCG28.png);
+  background-size: cover;
+  background-position: center;
+} */
+.carrousel .screens li img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#s1, #s2, #s3, #s4, #s5, #s6, #s7 {
+  background-size: cover;
+  background-position: center;
+}
+
+
+.formulario {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="date"],
+select,
+input[type="number"],
+input[type="email"],
+button {
+  width: calc(100% - 12px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  font-size: 16px;
+}
+
+select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #ccc 50%),
+    linear-gradient(135deg, #ccc 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+button {
+  width: 100%;
+  margin-top: 15px;
+  background-color: #0400ffb4;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
