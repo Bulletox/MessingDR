@@ -134,26 +134,33 @@ body {
   background-size: cover;
   background-position: center;
 }
-/* #s6 {
-  background-image: url(https://doocode.xyz/res/img/backgrounds/DCG29.png);
-  background-size: cover;
-  background-position: center;
-}
-#s7 {
-  background-image: url(https://doocode.xyz/res/img/backgrounds/DCG28.png);
-  background-size: cover;
-  background-position: center;
-} */
+
 .carrousel .screens li img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-#s1, #s2, #s3, #s4, #s5, #s6, #s7 {
+#s1, #s2, #s3, #s4, #s5{
   background-size: cover;
   background-position: center;
 }
+/* Estilos para el wrapper principal */
+.content-wrapper {
+  display: flex;
+  justify-content: space-between; 
+  max-width: 1700px; /* Ajusta el ancho según tu diseño */
+  margin: auto;
+  padding: 20px;
+}
 
+
+/* Estilos para el formulario */
+.formulario {
+  width: 35%; /* Ajusta el ancho del formulario */
+  /* Otros estilos para el formulario */
+}
+
+/* ------------------------------------ */
 
 .formulario {
   max-width: 400px;
@@ -198,14 +205,83 @@ select {
   background-repeat: no-repeat;
 }
 
-button {
-  width: 100%;
-  margin-top: 15px;
-  background-color: #0400ffb4;
-  color: white;
-  cursor: pointer;
+.message {
+  font-size: 14px;
+  color: #ff0000; /* Color rojo para destacar */
+  display: none; /* Ocultar el mensaje inicialmente */
 }
 
-button:hover {
-  background-color: #45a049;
+/* --------boton enviar--------- */
+button {
+  outline: none;
+  cursor: pointer;
+  border: none;
+  padding: 0.9rem 2rem;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0.05rem;
+  font-weight: 700;
+  font-size: 17px;
+  border-radius: 500px;
+  overflow: hidden;
+  background: #0077ff;
+  color: ghostwhite;
+ }
+ 
+ button span {
+  position: relative;
+  z-index: 10;
+  transition: color 0.4s;
+ }
+ 
+ button:hover span {
+  color: rgb(255, 255, 255);
+ }
+ 
+ button::before,
+ button::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+ }
+ 
+ button::before {
+  content: "";
+  background: #000000;
+  width: 120%;
+  left: -10%;
+  transform: skew(30deg);
+  transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+ }
+ 
+ button:hover::before {
+  transform: translate3d(100%, 0, 0);
+ }
+ 
+/* Estilos para el contenedor de la ubicación */
+.ubicacion {
+  width: 100%;
+  max-width: 800px; /* Ancho máximo */
+  margin: 20px auto; /* Margen para centrar */
+  margin-left: 200px; /* Ajusta este valor según tu preferencia */
+
+}
+.abajo {
+  display: flex;
+}
+
+.ubicacion {
+  flex: 1;
+  margin-right: 225px; /* Ajusta el margen derecho según tu preferencia */
+}
+
+.formulario {
+  flex: 1;
+  margin-left: 20px; /* Ajusta el margen izquierdo según tu preferencia */
 }

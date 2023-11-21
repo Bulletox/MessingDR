@@ -81,3 +81,16 @@ const horaInput = document.getElementById('hora');
       this.value = ''; // Limpiar el valor
     }
   });
+  // Seleccionar el input de cantidad de personas y el mensaje
+const cantidadInput = document.getElementById('cantidad');
+const message = document.querySelector('.message');
+
+// Escuchar el evento de cambio en el campo de cantidad
+cantidadInput.addEventListener('input', function () {
+  const cantidad = parseInt(cantidadInput.value, 10); // Obtener el valor como número
+  if (cantidad > 20) {
+    message.style.display = 'block'; // Mostrar el mensaje si la cantidad es mayor a 20
+  } else {
+    message.style.display = 'none'; // Ocultar el mensaje si la cantidad es 20 o menos
+  }
+});

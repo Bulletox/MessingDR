@@ -11,74 +11,97 @@
 <body>
     <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
     <h1>Goiko Grill</h1>
-    <div class="carrousel">
-        <ul class="screens">
-            <li id="s1">
-                <img src="img/imglanding/goiko/goikogrill.jpg" alt="Screen 1">
-            </li>
-            <li id="s2" class="left">
-                <img src="img/imglanding/goiko/hamburgesaKevin.jpg" alt="Screen 2">
-            </li>
-            <li id="s3" class="active">
-                <img src="img/imglanding/goiko/hamburguesaYankee-1.jpg" alt="Screen 3">
-            </li>
-            <li id="s4">
-                <img src="img/imglanding/goiko/hamburguesa6.jpg" alt="Screen 5">
-            </li>
-            <li id="s5">
-                <img src="img/imglanding/goiko/locall.jpg" alt="Screen 4">
-            </li>
-            <!-- <li id="s6">
+    <div class="content-wrapper">
+        <div class="carrousel">
+            <ul class="screens">
+                <li id="s1">
+                    <img src="img/imglanding/goiko/goikogrill.jpg" alt="Screen 1">
+                </li>
+                <li id="s2" class="left">
+                    <img src="img/imglanding/goiko/hamburgesaKevin.jpg" alt="Screen 2">
+                </li>
+                <li id="s3" class="active">
+                    <img src="img/imglanding/goiko/hamburguesaYankee-1.jpg" alt="Screen 3">
+                </li>
+                <li id="s4">
+                    <img src="img/imglanding/goiko/hamburguesa6.jpg" alt="Screen 5">
+                </li>
+                <li id="s5">
+                    <img src="img/imglanding/goiko/locall.jpg" alt="Screen 4">
+                </li>
+                <!-- <li id="s6">
             <p>Screen 6</p>
         </li>
         <li id="s7">
             <p>Screen 7</p>
         </li> -->
-        </ul>
-        <div class="pagination"></div>
-
-    </div>
-    <div class="formulario">
-        <h2>Reserva</h2>
-        <form action="/submit-reservation" method="post">
-          <div class="form-group">
-            <label for="fecha">Fecha:</label>
-            <input type="date" id="fecha" name="fecha" required>
-          </div>
-          <div class="form-group">
-            <label for="hora">Hora:</label>
-            <select name="hora" id="hora" required>
-              <option value="">Seleccionar hora</option>
-              <option value="13:00">13:00</option>
-              <option value="13:15">13:15</option>
-              <option value="13:30">13:30</option>
-              <option value="13:45">13:45</option>
-              <option value="14:00">14:00</option>
-              <option value="14:15">13:15</option>
-              <option value="14:30">14:30</option>
-              <option value="14:45">14:45</option>
-              <option value="15:00">15:00</option>
-              <option value="15:15">15:15</option>
-              <option value="15:30">15:30</option>
-             
-
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="cantidad">Cantidad de personas:</label>
-            <input type="number" id="cantidad" name="cantidad" min="1" max="20" required>
-            <span class="message">Por favor, contacte con el restaurante si son más de 20 personas.</span>
+            </ul>
+            <div class="pagination"></div>
 
         </div>
-          <div class="form-group">
-            <label for="email">Correo electrónico:</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          <button type="submit">Enviar</button>
-        </form>
-      </div>
-      
+        <div class="formulario">
+            <h2>Reserva</h2>
+            <form action="/submit-reservation" method="post">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fecha">Fecha:</label>
+                        <input type="date" id="fecha" name="fecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hora">Hora:</label>
+                        <select name="hora" id="hora" required>
+                            <option value="">Seleccionar hora</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:15">13:15</option>
+                            <option value="13:30">13:30</option>
+                            <option value="13:45">13:45</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:15">14:15</option>
+                            <option value="14:30">14:30</option>
+                            <option value="14:45">14:45</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:15">15:15</option>
+                            <option value="15:30">15:30</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad de personas:</label>
+                        <input type="number" id="cantidad" name="cantidad" min="1" max="20" required>
+                        <span class="message">Por favor, contacte con el restaurante si son más de 20 personas.</span>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <button> <span>Enviar</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ... (tu código actual) ... -->
+    <div class="abajo">
+        <div class="ubicacion">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d14244.685736567304!2d2.10812428808647!3d41.36156244186227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sgoiko%20grill!5e0!3m2!1ses!2ses!4v1700565753584!5m2!1ses!2ses"
+                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="formulario">
+            <h1>holi personis</h1>
+        </div>
+
+    </div>
+
+
+    <!-- ... (tu código actual) ... -->
+
+
     <script src="js/reserva.js"></script>
+
 </body>
 
 </html>
