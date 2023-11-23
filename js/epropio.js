@@ -1,4 +1,4 @@
-
+/*
 function fechaAleatoria() {
     const today = new Date();
     const daysToAdd = Math.floor(Math.random() * 5) + 1;
@@ -57,7 +57,7 @@ function generarDatos() {
     }
 }
 
-generarDatos();
+//generarDatos();
 
 $('#dataTableSA').dataTable({
     "order": [[3, 'asc'], [4, 'asc']]
