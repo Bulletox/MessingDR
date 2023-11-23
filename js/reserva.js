@@ -115,7 +115,9 @@ function showPopup(message) {
     const cantidad = document.getElementById('cantidad').value;
     const email = document.getElementById('email').value;
   
-    const mensaje = `Quiere reservar el ${fecha} a las ${hora} para ${cantidad} personas para ${email}`;
+    const mensaje = `Solicitud de reserva para el ${fecha} a las ${hora} para ${cantidad} personas, con correo ${email}
+    Se le confirmará con un correo electrónico`;
+    
   
     showPopup(mensaje);
   });
