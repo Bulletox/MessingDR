@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $num_personas = limpiar_datos($_POST["cantidad"]);
 
     // Creado y ejecutado la query para la inserción de los datos en la tabla "Usuario"
-    $sqlUsuario = "INSERT INTO Usuario (nombre, correo, telefono) VALUES (?, ?, ?)";
+    $sqlUsuario = "INSERT INTO usuario (nombre, correo, telefono) VALUES (?, ?, ?)";
     $stmtUsuario = $conn->prepare($sqlUsuario);
 
     // Vinculación de los datos para la tabla "Usuario"
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $estado = ($num_personas > 10) ? 2 : 1;
 
     // Creado y ejecutado la query para la inserción de los datos en la tabla "Reservas"
-    $sqlReservas = "INSERT INTO Reservas (fecha, num_personas, estado, id_usuario) VALUES (?, ?, ?, ?)";
+    $sqlReservas = "INSERT INTO reservas (fecha, num_personas, estado, id_usuario) VALUES (?, ?, ?, ?)";
     $stmtReservas = $conn->prepare($sqlReservas);
 
     // Vinculación de los datos para la tabla "Reservas"
