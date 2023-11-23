@@ -94,3 +94,29 @@ cantidadInput.addEventListener('input', function () {
     message.style.display = 'none'; // Ocultar el mensaje si la cantidad es 20 o menos
   }
 });
+
+function showPopup(message) {
+    const popup = document.getElementById('popup');
+    const details = document.getElementById('reservationDetails');
+    details.textContent = message;
+    popup.style.display = 'block';
+  }
+  
+  function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
+  }
+  
+  document.getElementById('enviarBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+  
+    const fecha = document.getElementById('fecha').value;
+    const hora = document.getElementById('hora').value;
+    const cantidad = document.getElementById('cantidad').value;
+    const email = document.getElementById('email').value;
+  
+    const mensaje = `Quiere reservar el ${fecha} a las ${hora} para ${cantidad} personas para ${email}`;
+  
+    showPopup(mensaje);
+  });
+  

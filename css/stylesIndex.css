@@ -168,3 +168,8 @@
   height: 225px; /* Establece la altura deseada */
   object-fit: cover; /* Escala la imagen para cubrir todo el contenedor */
 }
+/* Estilos para el enlace con la clase "mi-enlace" */
+.mi-enlace {
+  text-decoration: none;
+  color: #000000;
+}
