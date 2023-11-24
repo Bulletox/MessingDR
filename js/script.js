@@ -11,3 +11,21 @@
     });
   });
 
+  document.addEventListener("keyup", e => {
+    if (e.target.matches("#miInput")) {
+        const term = e.target.value.toLowerCase();
+
+        document.querySelectorAll(".nombrerestaurante").forEach(restaurante => {
+            const restauranteText = restaurante.textContent.toLowerCase();
+            const restauranteDiv = restaurante.closest('.col');  // Obtener el div padre del restaurante
+
+            if (restauranteText.includes(term)) {
+                restauranteDiv.classList.remove("filtro");
+            } else {
+                restauranteDiv.classList.add("filtro");
+            }
+        });
+    }
+});
+
+

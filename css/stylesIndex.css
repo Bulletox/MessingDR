@@ -173,3 +173,6 @@
   text-decoration: none;
   color: #000000;
 }
+.filtro{
+  display: none;
+}
