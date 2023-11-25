@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+<!-- Custom fonts for this template-->
     <form method= "post">
         <input type="text" placeholder= "name" name= "name" required ="">
         <input type="email" placeholder= "email" name= "email" required ="">
