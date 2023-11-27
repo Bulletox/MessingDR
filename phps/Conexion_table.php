@@ -16,10 +16,14 @@ if ($conn->connect_error) {
 $hora_actual = date("H:i:s");
 
 // Consulta SQL para obtener las reservas del día en curso y después de la hora actual
+// $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora 
+//         FROM reservas 
+//         JOIN usuario ON reservas.id_usuario = usuario.id 
+//         WHERE reservas.fecha = CURDATE() AND reservas.hora >= '$hora_actual'";
 $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora 
-        FROM reservas 
-        JOIN usuario ON reservas.id_usuario = usuario.id 
-        WHERE reservas.fecha = CURDATE() AND reservas.hora >= '$hora_actual'";
+FROM reservas 
+JOIN usuario ON reservas.id_usuario = usuario.id 
+WHERE usuario.nombre = 'testjavier'";
 
 $result = $conn->query($sql);
 
@@ -50,7 +54,7 @@ if ($result->num_rows > 0) {
 } else {
     echo "No hay reservas para el día de hoy después de la hora actual.";
 }
-
+echo "El php funciona";
 // Cerrar la conexión
 $conn->close();
 ?>
