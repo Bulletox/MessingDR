@@ -4,34 +4,24 @@ $servername = "localhost";
 $user = "mymessing97";
 $password = "VNfHYGt3";
 $dbname = "messingsql";
-echo "1";
+
 // Crear la conexión
 $conn = new mysqli($servername, $user, $password, $dbname);
 // Verificar la conexión
-echo "2";
+
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
 // Obtener la hora actual en el formato de la base de datos
 $hora_actual = date("H:i:s");
-echo "3";
-// Consulta SQL para obtener las reservas del día en curso y después de la hora actual
-// $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora 
-//         FROM reservas 
-//         JOIN usuario ON reservas.id_usuario = usuario.id 
-//         WHERE reservas.fecha = CURDATE() AND reservas.hora >= '$hora_actual'";
-//$sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora 
-//FROM reservas 
-//JOIN usuario ON reservas.id_usuario = usuario.id 
-//WHERE usuario.nombre = 'testjavier'";
 
-$sql = "SELECT *
-        FROM usuario 
-        ";
-echo "4";
+ $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora
+ FROM reservas
+ INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario";
+
 $result = $conn->query($sql);
-echo "5";
+
 
 ?>
 <!DOCTYPE html>
