@@ -1,3 +1,39 @@
+
+<?php
+$servername = "localhost";
+$user = "mymessing97";
+$password = "VNfHYGt3";
+$dbname = "messingsql";
+echo "1";
+// Crear la conexión
+$conn = new mysqli($servername, $user, $password, $dbname);
+// Verificar la conexión
+echo "2";
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Obtener la hora actual en el formato de la base de datos
+$hora_actual = date("H:i:s");
+echo "3";
+// Consulta SQL para obtener las reservas del día en curso y después de la hora actual
+// $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora 
+//         FROM reservas 
+//         JOIN usuario ON reservas.id_usuario = usuario.id 
+//         WHERE reservas.fecha = CURDATE() AND reservas.hora >= '$hora_actual'";
+//$sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora 
+//FROM reservas 
+//JOIN usuario ON reservas.id_usuario = usuario.id 
+//WHERE usuario.nombre = 'testjavier'";
+
+$sql = "SELECT *
+        FROM usuario 
+        ";
+echo "4";
+$result = $conn->query($sql);
+echo "5";
+
+?>
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="dark">
 
@@ -410,14 +446,41 @@
                                         <tr>
                                             <th>Nombre</th>
                                             <th>Personas</th>
-                                            <th>Mesa</th>
                                             <th>Fecha</th>
                                             <th>Hora</th>
                                             <th>Asistencia</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php include "phps/Conexion_table.php"; ?>
+                                        <?php if ($result->num_rows > 0) {
+                                                            while ($row = $result->fetch_assoc()) {
+                                                                echo "<tr>
+                                                                        <td>" . $row["nombre"] . "</td>
+                                                                        <td>" . $row["num_personas"] . "</td>
+                                                                        <td>" . $row["fecha"] . "</td>
+                                                                        <td>" . $row["hora"] . "</td>
+                                                                        <td>
+                                                                            <a href=\"#\" class=\"btn btn-success btn-icon-split\">
+                                                                                <span class=\"icon text-white-100\">
+                                                                                    <i class=\"fas fa-check\"></i>
+                                                                                </span>
+                                                                            </a>
+                                                                            <a href=\"#\" class=\"btn btn-danger btn-icon-split\">
+                                                                                <span class=\"icon text-white-100\">
+                                                                                    <i class=\"fas fa-trash\"></i>
+                                                                                </span>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>";
+                                                            }
+
+                                                            echo "</tbody></table>";
+                                                        } else {
+                                                            echo "No hay reservas para el día de hoy después de la hora actual.";
+                                                            echo "$hora_actual";
+                                                        }
+
+                                                         ?>
                                     </tbody>
                                 </table>
 
