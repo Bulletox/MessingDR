@@ -154,11 +154,7 @@ body {
 }
 
 
-/* Estilos para el formulario */
-.formulario {
-  width: 35%; /* Ajusta el ancho del formulario */
-  /* Otros estilos para el formulario */
-}
+
 
 /* ------------------------------------ */
 
@@ -179,7 +175,7 @@ body {
 
 label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   font-weight: bold;
 }
 
@@ -187,6 +183,7 @@ input[type="date"],
 select,
 input[type="number"],
 input[type="email"],
+input[type="nombre"],
 button {
   width: calc(100% - 12px);
   padding: 10px;
@@ -284,4 +281,28 @@ button {
 .formulario {
   flex: 1;
   margin-left: 20px; /* Ajusta el margen izquierdo según tu preferencia */
+}
+.popup-wrapper {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
 }
