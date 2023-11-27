@@ -79,12 +79,12 @@
 // generarDatos();
 
 $('#dataTableSA').dataTable({
-    "order": [[3, 'asc'], [4, 'asc']]
+    "order": [[2, 'asc'], [3, 'asc']]
 });
 
-function formatDate(date) {
-    return moment(date).format('DD/MM/YY');
-}
+// function formatDate(date) {
+//     return moment(date).format('DD/MM/YY');
+// }
 // NO tiene sentido hasta que no funcione la BBDD
 /*function contarReservasPendientes(idTabla) {
     console.log("chack1")
@@ -135,11 +135,11 @@ contarReservasPendientes('#dataTable');
     }
   }
  
-  const tabla = document.querySelector("#dataTableSA");
+  const tabla = document.querySelector("#dataTableSaA");
   
   // Borramos las filas antiguas
   borrarFilasAntiguas(tabla);*/
 
-  $('#dataTable').dataTable({
-    "order": [[3, 'asc'], [4, 'asc']]
-});
+//   $('#dataTable').dataTable({
+//     "order": [[3, 'asc'], [4, 'asc']]
+// });

@@ -59,7 +59,7 @@ function generarDatos() {
 
 //generarDatos();
 
-$('#dataTableSA').dataTable({
+$('#dataTableSaA').dataTable({
     "order": [[3, 'asc'], [4, 'asc']]
 });
 
@@ -116,7 +116,7 @@ contarReservasPendientes('#dataTable');
     }
   }
  
-  const tabla = document.querySelector("#dataTableSA");
+  const tabla = document.querySelector("#dataTableSaA");
   
   // Borramos las filas antiguas
   borrarFilasAntiguas(tabla);*/
