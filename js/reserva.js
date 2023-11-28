@@ -121,4 +121,15 @@ function showPopup(message) {
   
     showPopup(mensaje);
   });
+  function showPopup(message) {
+    const popup = document.getElementById('popup');
+    const details = document.getElementById('reservationDetails');
+    details.textContent = message;
+    popup.style.display = 'block';
+  
+    // Enviar el formulario después de mostrar el mensaje (simulación con setTimeout)
+    setTimeout(() => {
+      document.querySelector('form').submit(); // Esto enviará el formulario
+    }, 2000); // Envía el formulario después de 2 segundos (modifica el tiempo según sea necesario)
+  }
   
