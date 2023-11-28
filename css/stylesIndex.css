@@ -1,6 +1,6 @@
 .card-img-top {
-  height: 225px; /* Establece la altura deseada */
-  object-fit: cover; /* Escala la imagen para cubrir todo el contenedor */
+  height: 225px; 
+  object-fit: cover; 
 }
 /* -------------------------------------------------------- */
 .animated-button {

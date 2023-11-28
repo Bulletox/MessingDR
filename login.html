@@ -2,29 +2,20 @@
 <html lang="es">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>SB Admin 2 - Login</title>
-
-    <!-- Custom fonts for this template-->
-
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-
     <link rel="stylesheet" href="styleslogin.css">
-
 </head>
 
-<body class="bg-gradient-primary">
-
+<body class="bg-gradient-primary no-scroll" >
+  
     <section class="user">
         <div class="user_options-container">
             <div class="user_options-text">
@@ -43,8 +34,8 @@
             </div>
 
             <div class="user_options-forms" id="user_options-forms">
-                <div class="user_forms-login">
-                    <h2 class="forms_title">Login</h2>
+                <div class="user_forms-login">                  
+                <h2 class="forms_title">Login</h2>
                     <form class="forms_form">
                         <fieldset class="forms_fieldset">
                             <div class="forms_field">
@@ -60,15 +51,15 @@
                         </fieldset>
                         <div class="forms_buttons">
                             <button type="button" class="forms_buttons-forgot">Forgot password?</button>
-                            <input type="submit" value="Log In" class="forms_buttons-action">
+                            <a href="indexPC.html" class="forms_buttons-action">
+                                Login
+                            </a>
                         </div>
                     </form>
+                    
                 </div>
                 <div class="user_forms-signup">
-                    <div class="forms_buttons">
-                        <button type="button" id="signup-submit" class="forms_buttons-action">Sign up</button>
-                    </div>
-
+                    <h2 class="forms_title">Sign Up</h2>            
                     <form class="forms_form">
                         <fieldset class="forms_fieldset">
                             <div class="forms_field">
@@ -89,45 +80,34 @@
             </div>
         </div>
     </section>
-    <script>/**
-* Variables
-*/
+
+    <script>
         const signupButton = document.getElementById('signup-button'),
             loginButton = document.getElementById('login-button'),
             userForms = document.getElementById('user_options-forms')
 
-        /**
-         * Add event listener to the "Sign Up" button
-         */
         signupButton.addEventListener('click', () => {
             userForms.classList.remove('bounceRight')
             userForms.classList.add('bounceLeft')
         }, false)
-
-        /**
-         * Add event listener to the "Login" button
-         */
+ 
         loginButton.addEventListener('click', () => {
             userForms.classList.remove('bounceLeft')
             userForms.classList.add('bounceRight')
         }, false)
-        // Busca el nuevo botón de Sign Up por su ID
+       
         const signupSubmitButton = document.getElementById('signup-submit');
-
-        // Añade un event listener para redirigir al usuario a indexPC.html al hacer clic en el botón Sign Up
+   
         signupSubmitButton.addEventListener('click', () => {
-            window.location.href = 'indexPC.html'; // Redirige al usuario a indexPC.html al hacer clic en Sign Up
+            window.location.href = 'indexPC.html'; 
         }, false);
-
     </script>
-    <!-- Bootstrap core JavaScript-->
+  
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
 </body>
