@@ -1,28 +1,71 @@
 
 <?php
-$servername = "localhost";
-$user = "mymessing97";
-$password = "VNfHYGt3";
-$dbname = "messingsql";
+function conectarBaseDeDatos() {
+    $servername = "localhost";
+    $user = "mymessing97";
+    $password = "VNfHYGt3";
+    $dbname = "messingsql";
 
-// Crear la conexión
-$conn = new mysqli($servername, $user, $password, $dbname);
-// Verificar la conexión
+    // Crear la conexión
+    $conn = new mysqli($servername, $user, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    return $conn;
 }
+function obtenerReservas() {
+    // Obtener la conexión
+    $conn = conectarBaseDeDatos();
 
-// Obtener la hora actual en el formato de la base de datos
-$hora_actual = date("H:i:s");
+    // Obtener la hora actual en el formato de la base de datos
+    $fechaHoraActual = date("Y-m-d H:i:s");
 
- $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora
- FROM reservas
- INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario";
+    // Calcular la fecha y hora 1 hora atrás
+    $fechaHoraHaceUnaHora = date("Y-m-d H:i:s", strtotime("-1 hour", strtotime($fechaHoraActual)));
 
-$result = $conn->query($sql);
+    $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora
+            FROM reservas
+            INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
+            WHERE fecha = CURDATE() AND hora >= '$fechaHoraHaceUnaHora'";
+            
 
+    $result = $conn->query($sql);
 
+    // Cerrar la conexión
+    $conn->close();
+
+    return $result;
+}
+function obtenerNumeroReservasDelDia() {
+    // Obtener la conexión
+    $conn = conectarBaseDeDatos();
+
+    // Obtener la fecha actual en el formato de la base de datos
+    $fecha_actual = date("Y-m-d");
+
+    // Consulta para obtener el número de reservas del día en curso
+    $sql = "SELECT COUNT(*) as totalReservas
+            FROM reservas
+            WHERE fecha = '$fecha_actual'";
+
+    $result = $conn->query($sql);
+
+    // Verificar si la consulta fue exitosa
+    if ($result === false) {
+        die("Error en la consulta: " . $conn->error);
+    }
+
+    // Obtener el número de reservas del día en curso
+    $numeroReservas = $result->fetch_assoc()['totalReservas'];
+
+    // Cerrar la conexión
+    $conn->close();
+
+    return $numeroReservas;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="dark">
@@ -366,7 +409,10 @@ $result = $conn->query($sql);
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Reservas del dia</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">20</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php $numeroReservasDelDia = obtenerNumeroReservasDelDia();
+                                                echo "$numeroReservasDelDia";
+                                            ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -442,8 +488,10 @@ $result = $conn->query($sql);
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php if ($result->num_rows > 0) {
-                                                            while ($row = $result->fetch_assoc()) {
+                                        <?php 
+                                        $reservas = obtenerReservas();
+                                        if ($reservas->num_rows > 0) {
+                                                            while ($row = $reservas->fetch_assoc()) {
                                                                 echo "<tr>
                                                                         <td>" . $row["nombre"] . "</td>
                                                                         <td>" . $row["num_personas"] . "</td>
