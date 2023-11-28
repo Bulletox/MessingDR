@@ -1,4 +1,3 @@
-
 <?php
 
 include "phps/Conexion_BBDD.php";
@@ -15,8 +14,8 @@ function obtenerReservas() {
     $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora
             FROM reservas
             INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
-            WHERE fecha = CURDATE() AND hora >= '$fechaHoraHaceUnaHora' OR (fecha > CURDATE())";
-            
+            WHERE fecha = CURDATE() AND hora >= '$fechaHoraHaceUnaHora' AND estado = 1 OR (fecha > CURDATE())";
+
     $result = $conn->query($sql);
 
     // Cerrar la conexión
@@ -40,8 +39,8 @@ function obtenerNumeroReservasDelDia() {
     $result = $conn->query($sql);
 
     // Verificar si la consulta fue exitosa
-    if ($result === false) {
-        die("Error en la consulta: " . $conn->error);
+    if($result === false) {
+        die("Error en la consulta: ".$conn->error);
     }
 
     // Obtener el número de reservas del día en curso
@@ -52,7 +51,31 @@ function obtenerNumeroReservasDelDia() {
 
     return $numeroReservas;
 }
+function obtenerNumeroPendientes() {
+    // Obtener la conexión
+    $conn = conectarBaseDeDatos();
 
+
+    // Consulta para obtener el número de reservas del día en curso
+    $sql = "SELECT COUNT(*) as totalReservas
+            FROM reservas
+            WHERE estado = 2";
+
+    $result = $conn->query($sql);
+
+    // Verificar si la consulta fue exitosa
+    if($result === false) {
+        die("Error en la consulta: ".$conn->error);
+    }
+
+    // Obtener el número de reserves pendientes
+    $numeroPendientes = $result->fetch_assoc()['totalReservas'];
+
+    // Cerrar la conexión
+    $conn->close();
+
+    return $numeroPendientes;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="dark">
@@ -63,7 +86,7 @@ function obtenerNumeroReservasDelDia() {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="javier" content="">
 
     <title>MESSING Admin - CP</title>
 
@@ -76,6 +99,9 @@ function obtenerNumeroReservasDelDia() {
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- jquery  -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
 </head>
 
@@ -90,7 +116,16 @@ function obtenerNumeroReservasDelDia() {
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="indexPC.html">
                 <div class="sidebar-brand-icon ">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M416 0C400 0 288 32 288 176V288c0 35.3 28.7 64 64 64h32V480c0 17.7 14.3 32 32 32s32-14.3 32-32V352 240 32c0-17.7-14.3-32-32-32zM64 16C64 7.8 57.9 1 49.7 .1S34.2 4.6 32.4 12.5L2.1 148.8C.7 155.1 0 161.5 0 167.9c0 45.9 35.1 83.6 80 87.7V480c0 17.7 14.3 32 32 32s32-14.3 32-32V255.6c44.9-4.1 80-41.8 80-87.7c0-6.4-.7-12.8-2.1-19.1L191.6 12.5c-1.8-8-9.3-13.3-17.4-12.4S160 7.8 160 16V150.2c0 5.4-4.4 9.8-9.8 9.8c-5.1 0-9.3-3.9-9.8-9L127.9 14.6C127.2 6.3 120.3 0 112 0s-15.2 6.3-15.9 14.6L83.7 151c-.5 5.1-4.7 9-9.8 9c-5.4 0-9.8-4.4-9.8-9.8V16zm48.3 152l-.3 0-.3 0 .3-.7 .3 .7z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="2em"
+                        viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <style>
+                            svg {
+                                fill: #ffffff
+                            }
+                        </style>
+                        <path
+                            d="M416 0C400 0 288 32 288 176V288c0 35.3 28.7 64 64 64h32V480c0 17.7 14.3 32 32 32s32-14.3 32-32V352 240 32c0-17.7-14.3-32-32-32zM64 16C64 7.8 57.9 1 49.7 .1S34.2 4.6 32.4 12.5L2.1 148.8C.7 155.1 0 161.5 0 167.9c0 45.9 35.1 83.6 80 87.7V480c0 17.7 14.3 32 32 32s32-14.3 32-32V255.6c44.9-4.1 80-41.8 80-87.7c0-6.4-.7-12.8-2.1-19.1L191.6 12.5c-1.8-8-9.3-13.3-17.4-12.4S160 7.8 160 16V150.2c0 5.4-4.4 9.8-9.8 9.8c-5.1 0-9.3-3.9-9.8-9L127.9 14.6C127.2 6.3 120.3 0 112 0s-15.2 6.3-15.9 14.6L83.7 151c-.5 5.1-4.7 9-9.8 9c-5.4 0-9.8-4.4-9.8-9.8V16zm48.3 152l-.3 0-.3 0 .3-.7 .3 .7z" />
+                    </svg>
                 </div>
                 <div class="sidebar-brand-text mx-3">MESSING Admin<sup>0.5</sup></div>
             </a>
@@ -397,9 +432,11 @@ function obtenerNumeroReservasDelDia() {
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Reservas del dia</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $numeroReservasDelDia = obtenerNumeroReservasDelDia();
-                                                echo "$numeroReservasDelDia";
-                                            ?></div>
+                                                <?php 
+                                                    $numeroReservasDelDia = obtenerNumeroReservasDelDia();
+                                                    echo "$numeroReservasDelDia";
+                                                ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -445,8 +482,14 @@ function obtenerNumeroReservasDelDia() {
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Reservas pendientes</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="contadorPendiente">18</div>
+                                                Reservas pendientes
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="contadorPendiente">
+                                                <?php
+                                                    $numeroPendientes = obtenerNumeroPendientes();
+                                                    echo "$numeroPendientes";
+                                                ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -458,7 +501,7 @@ function obtenerNumeroReservasDelDia() {
                     </div>
                     <!-- Page Heading -->
                     <!-- Tabla -->
-                    <div class="card shadow mb-4">
+                    <div id = "recarga" class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">RESERVAS PARA HOY</h6>
                         </div>
@@ -475,46 +518,64 @@ function obtenerNumeroReservasDelDia() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php 
+                                    <?php
                                         $reservas = obtenerReservas();
                                         if ($reservas->num_rows > 0) {
-                                                            while ($row = $reservas->fetch_assoc()) {
-                                                                echo "<tr>
-                                                                        <td>" . $row["nombre"] . "</td>
-                                                                        <td>" . $row["num_personas"] . "</td>
-                                                                        <td>" . $row["fecha"] . "</td>
-                                                                        <td>" . $row["hora"] . "</td>
-                                                                        <td>
-                                                                            <a href=\"#\" class=\"btn btn-success btn-icon-split\">
-                                                                                <span class=\"icon text-white-100\">
-                                                                                    <i class=\"fas fa-check\"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                            <a href=\"#\" class=\"btn btn-danger btn-icon-split\">
-                                                                                <span class=\"icon text-white-100\">
-                                                                                    <i class=\"fas fa-trash\"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </td>
-                                                                    </tr>";
-                                                            }
+                                            while ($row = $reservas->fetch_assoc()) {
+                                                echo "<tr>
+                                                        <td>" . $row["nombre"] . "</td>
+                                                        <td>" . $row["num_personas"] . "</td>
+                                                        <td>" . $row["fecha"] . "</td>
+                                                        <td>" . $row["hora"] . "</td>
+                                                        <td>
+                                                            <a href=\"#\" class=\"btn btn-success btn-icon-split\">
+                                                                <span class=\"icon text-white-100\">
+                                                                    <i class=\"fas fa-check\"></i>
+                                                                </span>
+                                                            </a>
+                                                            <a href=\"#\" class=\"btn btn-danger btn-icon-split\" onclick=\"eliminarReserva(" . $row["id_reserva"] . ")\">
+                                                                <span class=\"icon text-white-100\">
+                                                                    <i class=\"fas fa-trash\"></i>
+                                                                </span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>";
+                                            }
 
-                                                            echo "</tbody></table>";
-                                                        } else {
-                                                            echo "No hay reservas para el día de hoy después de la hora actual.";
-                                                            echo "$hora_actual";
-                                                        }
-
-                                                         ?>
+                                            echo "</tbody></table>";
+                                        } else {
+                                            echo "No hay reservas para el día de hoy después de la hora actual.";
+                                        }
+                                    ?>
                                     </tbody>
                                 </table>
-
+                                <script>
+function eliminarReserva(idReserva) {
+    event.preventDefault();
+    console.log(1);
+    // Realizar una solicitud AJAX para actualizar la columna 'estado' a 3
+    $.ajax({
+        type: "POST",
+        url: "phps/eliminar_reserva.php",  // Nombre del archivo PHP que manejará la actualización
+        data: { id_reserva: idReserva },
+        success: function(response) {
+            // Actualizar la tabla o realizar otras acciones necesarias después de la eliminación
+            alert("Reserva eliminada con éxito");
+        },
+        error: function(xhr, status, error) {
+            // Manejar errores si es necesario
+            alert("Error al eliminar la reserva");
+        
+        }
+    });
+}
+</script>
                             </div>
                         </div>
                     </div>
 
                 </div>
-                
+
                 <!-- /.container-fluid -->
             </div>
         </div>
@@ -560,6 +621,29 @@ function obtenerNumeroReservasDelDia() {
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var dataTableSA = $("#dataTableSA").DataTable(); // Guarda la referencia a la instancia DataTable
+
+        setInterval(function() {
+            $("#recarga").load("indexPC.php #recarga", function() {
+                // Destruye la tabla actual antes de la recarga
+                dataTableSA.destroy();
+
+                // Vuelve a inicializar la tabla después de la recarga
+                $("#dataTableSA").DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                },
+                "order": [[2, 'asc'], [3, 'asc']]
+            });
+            });
+            console.log(1);
+            
+            //$.getScript("js/tdata.js");
+        }, 60000);
+    });
+</script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
