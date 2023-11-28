@@ -34,6 +34,19 @@ try {
         
         $num_personas = limpiar_datos($_POST["cantidad"]);
 
+        $sqlVerificarCorreo = "SELECT id_usuario FROM usuario WHERE correo = ?";
+        $stmtVerificarCorreo = $conn->prepare($sqlVerificarCorreo);
+        $stmtVerificarCorreo->bind_param("s", $correo);
+        $stmtVerificarCorreo->execute();
+        $stmtVerificarCorreo->store_result();
+
+        if ($stmtVerificarCorreo->num_rows > 0) {
+            // El correo ya está registrado, mostrar un mensaje de error o redirigir a una página de error
+            echo "El correo ya está registrado. Por favor, utiliza otro correo.";
+            $conn->close();
+            exit;
+        }
+
         // Creado y ejecutado la query para la inserción de los datos en la tabla "Usuario"
         $sqlUsuario = "INSERT INTO usuario (nombre, correo) VALUES (?, ?)";
         $stmtUsuario = $conn->prepare($sqlUsuario);
