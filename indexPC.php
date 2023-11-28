@@ -501,7 +501,7 @@ function obtenerNumeroPendientes() {
                     </div>
                     <!-- Page Heading -->
                     <!-- Tabla -->
-                    <div class="card shadow mb-4">
+                    <div id = "recarga" class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">RESERVAS PARA HOY</h6>
                         </div>
@@ -621,6 +621,29 @@ function eliminarReserva(idReserva) {
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var dataTableSA = $("#dataTableSA").DataTable(); // Guarda la referencia a la instancia DataTable
+
+        setInterval(function() {
+            $("#recarga").load("indexPC.php #recarga", function() {
+                // Destruye la tabla actual antes de la recarga
+                dataTableSA.destroy();
+
+                // Vuelve a inicializar la tabla después de la recarga
+                $("#dataTableSA").DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                },
+                "order": [[2, 'asc'], [3, 'asc']]
+            });
+            });
+            console.log(1);
+            
+            //$.getScript("js/tdata.js");
+        }, 60000);
+    });
+</script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

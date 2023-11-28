@@ -79,7 +79,10 @@
 // generarDatos();
 
 $('#dataTableSA').dataTable({
-    "order": [[2, 'asc'], [3, 'asc']]
+  "language": {
+    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+  },
+  "order": [[2, 'asc'], [3, 'asc']]
 });
 
 // function formatDate(date) {
@@ -117,7 +120,7 @@ contarReservasPendientes('#dataTable');
     console.log("chack2")
     const fechaActual = new Date();
     const horaActual = fechaActual.getHours() + ":" + fechaActual.getMinutes() + ":" + fechaActual.getSeconds();
-    
+
     // Recorremos las filas de la tabla
     for (const fila of tabla.querySelectorAll("tr")) {
       // Obtenemos la hora de la cuarta columna
@@ -134,9 +137,9 @@ contarReservasPendientes('#dataTable');
       console.log("chack3")
     }
   }
- 
+
   const tabla = document.querySelector("#dataTableSaA");
-  
+
   // Borramos las filas antiguas
   borrarFilasAntiguas(tabla);*/
 
