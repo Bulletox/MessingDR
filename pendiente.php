@@ -1,3 +1,27 @@
+<?php
+include "phps/Conexion_BBDD.php";
+function obtenerReservas() {
+    // Obtener la conexión
+    $conn = conectarBaseDeDatos();
+
+    // Obtener la hora actual en el formato de la base de datos
+    $fechaHoraActual = date("Y-m-d H:i:s");
+
+    // Calcular la fecha y hora 1 hora atrás
+
+    $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora
+            FROM reservas
+            INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
+            WHERE estado = 2;";
+            
+    $result = $conn->query($sql);
+
+    // Cerrar la conexión
+    $conn->close();
+
+    return $result;
+}
+?>
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="dark">
 
@@ -325,87 +349,42 @@
                                         <tr>
                                             <th>Nombre</th>
                                             <th>Personas</th>
-                                            <th>Zona</th>
                                             <th>Fecha</th>
                                             <th>Hora</th>
                                             <th>Estado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                         <!--<tr>
-                                            <td>Juan Pérez</td>
-                                            <td>Reservar mesa para 2</td>
-                                            <td>Terraza</td>
-                                            <td>01/11/23</td>
-                                            <td>11:30</td>
-                                            <td><a href="#" class="btn btn-success btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        </a>
-                                        <a href="#" class="btn btn-danger btn-icon-split">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-trash"></i>
-                                            </span>
-                                        </a>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                            <td>María García</td>
-                                            <td>Reservar mesa para 4</td>
-                                            <td>Comedor</td>
-                                            <td>04/11/23</td>
-                                            <td>13:30</td>
-                                            <td>Pendiente de confirmación</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pedro López</td>
-                                            <td>Reservar mesa para 6</td>
-                                            <td>Terraza</td>
-                                            <td>05/11/23</td>
-                                            <td>14:30</td>
-                                            <td>Cancelado</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ana Sánchez</td>
-                                            <td>Reservar mesa para 8</td>
-                                            <td>Comedor</td>
-                                            <td>06/11/23</td>
-                                            <td>21:00</td>
-                                            <td>Pendiente de confirmación</td>
-                                        </tr>
-                                        <tr>
-                                            <td>David Rodríguez</td>
-                                            <td>Reservar mesa para 10</td>
-                                            <td>Terraza</td>
-                                            <td>06/11/23</td>
-                                            <td>15:00</td>
-                                            <td>Confirmado</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Elena González</td>
-                                            <td>Reservar mesa para 12</td>
-                                            <td>Comedor</td>
-                                            <td>08/11/23</td>
-                                            <td>19:30</td>
-                                            <td>Cancelado</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Francisco Martínez</td>
-                                            <td>Reservar mesa para 14</td>
-                                            <td>Terraza</td>
-                                            <td>09/11/23</td>
-                                            <td>22:00</td>
-                                            <td>Pendiente de confirmación</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Isabel Ruiz</td>
-                                            <td>Reservar mesa para 16</td>
-                                            <td>Comedor</td>
-                                            <td>10/11/23</td>
-                                            <td>12:00</td>
-                                            <td>Confirmado</td>
-                                        </tr> -->
+                                    <?php 
+                                        $reservas = obtenerReservas();
+                                        if ($reservas->num_rows > 0) {
+                                                            while ($row = $reservas->fetch_assoc()) {
+                                                                echo "<tr>
+                                                                        <td>" . $row["nombre"] . "</td>
+                                                                        <td>" . $row["num_personas"] . "</td>
+                                                                        <td>" . $row["fecha"] . "</td>
+                                                                        <td>" . $row["hora"] . "</td>
+                                                                        <td>
+                                                                            <a href=\"#\" class=\"btn btn-success btn-icon-split\">
+                                                                                <span class=\"icon text-white-100\">
+                                                                                    <i class=\"fas fa-check\"></i>
+                                                                                </span>
+                                                                            </a>
+                                                                            <a href=\"#\" class=\"btn btn-danger btn-icon-split\">
+                                                                                <span class=\"icon text-white-100\">
+                                                                                    <i class=\"fas fa-trash\"></i>
+                                                                                </span>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>";
+                                                            }
+
+                                                            echo "</tbody></table>";
+                                                        } else {
+                                                            echo "No hay reservas pendientes";
+                                                        }
+
+                                                         ?>
                                     </tbody>
                                 </table>
 
