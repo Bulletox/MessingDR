@@ -29,16 +29,15 @@
         <div class="user_options-container">
             <div class="user_options-text">
                 <div class="user_options-unregistered">
-                    <h2 class="user_unregistered-title">Don't have an account?</h2>
-                    <p class="user_unregistered-text">Banjo tote bag bicycle rights, High Life sartorial cray craft beer
-                        whatever street art fap.</p>
+                    <h2 class="user_unregistered-title">¿Aún no formas parte de Messing?</h2>
+                    <p class="user_unregistered-text">Únete a nosotros y deja que tu restaurante vaya de boca en boca
+                    </p>
                     <button class="user_unregistered-signup" id="signup-button">Sign up</button>
                 </div>
 
                 <div class="user_options-registered">
-                    <h2 class="user_registered-title">Have an account?</h2>
-                    <p class="user_registered-text">Banjo tote bag bicycle rights, High Life sartorial cray craft beer
-                        whatever street art fap.</p>
+                    <h2 class="user_registered-title">Identifícate!</h2>
+                    <p class="user_registered-text">Mira todas las reservas que han hecho</p>
                     <button class="user_registered-login" id="login-button">Login</button>
                 </div>
             </div>
@@ -48,6 +47,10 @@
                     <h2 class="forms_title">Login</h2>
                     <form class="forms_form">
                         <fieldset class="forms_fieldset">
+                            <div class="forms_field">
+                                <input type="name" placeholder="Restaurante" class="forms_field-input" required
+                                    autofocus />
+                            </div>
                             <div class="forms_field">
                                 <input type="email" placeholder="Email" class="forms_field-input" required autofocus />
                             </div>
@@ -62,11 +65,14 @@
                     </form>
                 </div>
                 <div class="user_forms-signup">
-                    <h2 class="forms_title">Sign Up</h2>
+                    <div class="forms_buttons">
+                        <button type="button" id="signup-submit" class="forms_buttons-action">Sign up</button>
+                    </div>
+
                     <form class="forms_form">
                         <fieldset class="forms_fieldset">
                             <div class="forms_field">
-                                <input type="text" placeholder="Full Name" class="forms_field-input" required />
+                                <input type="text" placeholder="Restaurante" class="forms_field-input" required />
                             </div>
                             <div class="forms_field">
                                 <input type="email" placeholder="Email" class="forms_field-input" required />
@@ -104,7 +110,16 @@
         loginButton.addEventListener('click', () => {
             userForms.classList.remove('bounceLeft')
             userForms.classList.add('bounceRight')
-        }, false) </script>
+        }, false)
+        // Busca el nuevo botón de Sign Up por su ID
+        const signupSubmitButton = document.getElementById('signup-submit');
+
+        // Añade un event listener para redirigir al usuario a indexPC.html al hacer clic en el botón Sign Up
+        signupSubmitButton.addEventListener('click', () => {
+            window.location.href = 'indexPC.html'; // Redirige al usuario a indexPC.html al hacer clic en Sign Up
+        }, false);
+
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
