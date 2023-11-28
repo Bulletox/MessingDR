@@ -1,21 +1,7 @@
 
 <?php
-function conectarBaseDeDatos() {
-    $servername = "localhost";
-    $user = "mymessing97";
-    $password = "VNfHYGt3";
-    $dbname = "messingsql";
 
-    // Crear la conexión
-    $conn = new mysqli($servername, $user, $password, $dbname);
-
-    // Verificar la conexión
-    if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
-    }
-
-    return $conn;
-}
+include "phps/Conexion_BBDD.php";
 function obtenerReservas() {
     // Obtener la conexión
     $conn = conectarBaseDeDatos();
@@ -29,9 +15,8 @@ function obtenerReservas() {
     $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora
             FROM reservas
             INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
-            WHERE fecha = CURDATE() AND hora >= '$fechaHoraHaceUnaHora'";
+            WHERE fecha = CURDATE() AND hora >= '$fechaHoraHaceUnaHora' OR (fecha > CURDATE())";
             
-
     $result = $conn->query($sql);
 
     // Cerrar la conexión
@@ -39,6 +24,7 @@ function obtenerReservas() {
 
     return $result;
 }
+
 function obtenerNumeroReservasDelDia() {
     // Obtener la conexión
     $conn = conectarBaseDeDatos();
@@ -66,6 +52,7 @@ function obtenerNumeroReservasDelDia() {
 
     return $numeroReservas;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="dark">
@@ -121,7 +108,7 @@ function obtenerNumeroReservasDelDia() {
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
-                <a class="nav-link" href="pendiente.html">
+                <a class="nav-link" href="pendiente.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Pendientes</span></a>
             </li>
