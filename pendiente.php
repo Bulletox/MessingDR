@@ -68,7 +68,7 @@ function obtenerReservas() {
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="indexPC.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -76,14 +76,14 @@ function obtenerReservas() {
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
-                <a class="nav-link" href="pendiente.html">
+                <a class="nav-link" href="pendiente.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Pendientes</span></a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
-                <a class="nav-link" href="pendiente.html">
+                <a class="nav-link" href="pendiente.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>KPI</span></a>
             </li>
