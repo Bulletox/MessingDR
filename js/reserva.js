@@ -124,5 +124,5 @@ document.addEventListener("DOMContentLoaded", () => {
     // Agregar un tiempo de espera antes de redirigir para asegurar que se muestre el mensaje
     setTimeout(() => {
       window.location.href = 'index.html'; // Reemplaza 'ruta_a_tu_index.html' con la ruta correcta
-    }, 2000); // Espera 2 segundos antes de redirigir (ajusta según sea necesario)
+    }, 2000); // Espera 2 segundos antes de redirigir (ajusta según sea necesario).
   });
