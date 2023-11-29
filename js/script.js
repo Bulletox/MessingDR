@@ -10,6 +10,11 @@
       secondAlbum.style.display = (secondAlbum.style.display === "none") ? "block" : "none";
     });
   });
+  //hago que el menu hamburguesa se despliegue cuando le damos nosotros y no que se despliegue autom. cuando se abre la pagina
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const navbarHeader = document.getElementById('navbarHeader');
+    navbarHeader.classList.remove('show');
+  });
 // A partir de aquí empieza la llamada para hacer que el buscador funcione mediante lo que se introduce en él
   document.addEventListener("keyup", e => {
     if (e.target.matches("#miInput")) {
