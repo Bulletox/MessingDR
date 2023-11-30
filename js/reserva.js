@@ -73,8 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
   
   horaInput.addEventListener('input', function () {
     const horaSeleccionada = this.value;
-    const horaMinima = '13:00';
-    const horaMaxima = '15:30';
+    const horaMinima = '10:00';
+    const horaMaxima = '22:00';
   
     if (horaSeleccionada < horaMinima || horaSeleccionada > horaMaxima) {
       this.value = '';
