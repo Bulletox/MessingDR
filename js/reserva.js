@@ -108,21 +108,27 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   }
   
-  document.getElementById('enviarBtn').addEventListener('click', function(event) {
+  document.querySelector('form').addEventListener('submit', function (event) {
     event.preventDefault();
 
+    const nombre = document.getElementById('nombre').value;
     const fecha = document.getElementById('fecha').value;
     const hora = document.getElementById('hora').value;
     const cantidad = document.getElementById('cantidad').value;
     const email = document.getElementById('email').value;
 
-    const mensaje = `Solicitud de reserva para el ${fecha} a las ${hora} para ${cantidad} personas, con correo ${email}
-    Se le confirmará con un correo electrónico`;
+    if (nombre === '' || fecha === '' || hora === '' || cantidad === '' || email === '') {
+        alert('Por favor, completa todos los campos.');
+        return; // Evita que el formulario se envíe si los campos están vacíos
+    }
+
+    const mensaje = `Solicitud de reserva para el ${fecha} a las ${hora} para ${cantidad} personas, con correo ${email}.
+    Se le confirmará con un correo electrónico.`;
 
     showPopup(mensaje);
 
     // Agregar un tiempo de espera antes de redirigir para asegurar que se muestre el mensaje
     setTimeout(() => {
-      window.location.href = 'index.html'; // Reemplaza 'ruta_a_tu_index.html' con la ruta correcta
+        window.location.href = 'index.html'; // Reemplaza 'ruta_a_tu_index.html' con la ruta correcta
     }, 2000); // Espera 2 segundos antes de redirigir (ajusta según sea necesario).
-  });
+});

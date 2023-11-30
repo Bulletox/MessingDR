@@ -99,6 +99,7 @@
                             </optgroup>
                         </select>
                     </div>
+                    
                     <script>
                         // Obtener el elemento select
                         var selectElement = document.getElementById("hora");
@@ -130,6 +131,10 @@
                         <label for="email">Correo electrónico:</label>
                         <input type="email" id="email" name="email" required>
                     </div>
+                    <div class="form-group">
+                        <label for="nombre">Número</label>
+                        <input type="nombre" id="nombre" name="nombre" required>
+                    </div>
                     <button type="submit" id="enviarBtn"> <span>Enviar</span></button>
                 </div>
                 <script>
@@ -146,7 +151,12 @@
 
         </div>
     </div>
-
+    <div id="popup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closePopup()">×</span>
+            <div id="reservationDetails"></div>
+        </div>
+    </div>
     <div class="abajo">
         <div class="ubicacion">
             <iframe

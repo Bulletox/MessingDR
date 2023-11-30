@@ -282,7 +282,7 @@ button {
   flex: 1;
   margin-left: 20px; /* Ajusta el margen izquierdo según tu preferencia */
 }
-.popup-wrapper {
+.popup-overlay {
   display: none;
   position: fixed;
   top: 50%;
@@ -297,6 +297,13 @@ button {
 
 .popup-content {
   text-align: center;
+}
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
 }
 
 .close {

@@ -85,7 +85,12 @@
             </form>
         </div>
     </div>
-
+    <div id="popup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closePopup()">×</span>
+            <div id="reservationDetails"></div>
+        </div>
+    </div>
     <div class="abajo">
         <div class="ubicacion">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2984.88249029446!2d2.4970833764854787!3d41.57178777127704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12bb4be9ebc2b285%3A0xe4417f4918cb1c00!2zUmFjw7MgMTk!5e0!3m2!1ses!2ses!4v1700738912851!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>        </div>
@@ -94,14 +99,6 @@
         </div>
 
     </div>
-    <div id="popup" class="popup-wrapper">
-        <div class="popup-content">
-          <span class="close" onclick="closePopup()">&times;</span>
-          <h2>¡Reserva solicitada!</h2>
-          <p id="reservationDetails"></p>
-        </div>
-      </div>
-      
 
     <script src="js/reserva.js"></script>
 
