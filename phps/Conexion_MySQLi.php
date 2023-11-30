@@ -15,14 +15,14 @@ $user = "mymessing97";
 $password = "VNfHYGt3";
 $dbname = "messingsql";
 
+// Establecer conexión
+$conn = new mysqli($servername, $user, $password, $dbname);
 
-    // Establecer conexión
-    $conn = new mysqli($servername, $user, $password, $dbname);
+// Verificación de la conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
 
-    // Verificación de la conexión
-    if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
-    }
 try {
     // Procesamiento del formulario que se ha enviado
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -31,26 +31,34 @@ try {
         $correo = limpiar_datos($_POST["email"]);
         $fecha = limpiar_datos($_POST["fecha"]);
         $hora = limpiar_datos($_POST["hora"]);
-        
         $num_personas = limpiar_datos($_POST["cantidad"]);
 
-        // Creado y ejecutado la query para la inserción de los datos en la tabla "Usuario"
-        $sqlUsuario = "INSERT INTO usuario (nombre, correo) VALUES (?, ?)";
-        $stmtUsuario = $conn->prepare($sqlUsuario);
+        // Verificar si el correo ya está registrado
+        $sqlVerificarCorreo = "SELECT id_usuario FROM usuario WHERE correo = ?";
+        $stmtVerificarCorreo = $conn->prepare($sqlVerificarCorreo);
+        $stmtVerificarCorreo->bind_param("s", $correo);
+        $stmtVerificarCorreo->execute();
+        $stmtVerificarCorreo->store_result();
 
-        // Vinculación de los datos para la tabla "Usuario"
-        $stmtUsuario->bind_param("ss", $nombre, $correo);
+        // Obtener el ID del usuario existente o insertar uno nuevo
+        if ($stmtVerificarCorreo->num_rows > 0) {
+            $stmtVerificarCorreo->bind_result($id_usuario);
+            $stmtVerificarCorreo->fetch();
+        } else {
+            // El correo no existe, insertar en la tabla "Usuario"
+            $sqlUsuario = "INSERT INTO usuario (nombre, correo) VALUES (?, ?)";
+            $stmtUsuario = $conn->prepare($sqlUsuario);
+            $stmtUsuario->bind_param("ss", $nombre, $correo);
 
+            if (!$stmtUsuario->execute()) {
+                echo "Error al insertar en la tabla Usuario: " . $stmtUsuario->error;
+                $conn->close();
+                exit;
+            }
 
-        // Ejecutar la consulta para la tabla "Usuario"
-        if (!$stmtUsuario->execute()) {
-            echo "Error al insertar en la tabla Usuario: " . $stmtUsuario->error;
-            $conn->close();
-            exit;
+            // Obtener el ID del usuario recién insertado
+            $id_usuario = $stmtUsuario->insert_id;
         }
-
-        // Obtener el ID del usuario recién insertado
-        $id_usuario = $stmtUsuario->insert_id;
 
         // Definir un estado predeterminado (ajústalo según tus necesidades)
         $estado = ($num_personas > 10) ? 2 : 1;
@@ -72,9 +80,6 @@ try {
 
     // Cerrar conexión
     $conn->close();
-
-    // Declaración de la función para limpiar datos
-
 } catch (Exception $e) {
     echo 'Excepción capturada: ',  $e->getMessage(), "\n";
 }

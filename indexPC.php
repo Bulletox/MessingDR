@@ -14,7 +14,7 @@ function obtenerReservas() {
     $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora
             FROM reservas
             INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
-            WHERE fecha = CURDATE() AND hora >= '$fechaHoraHaceUnaHora' AND estado = 1 OR (fecha > CURDATE())";
+            WHERE fecha >= CURDATE() AND hora >= '$fechaHoraHaceUnaHora' AND estado = 1";
 
     $result = $conn->query($sql);
 
@@ -75,6 +75,22 @@ function obtenerNumeroPendientes() {
     $conn->close();
 
     return $numeroPendientes;
+}
+function eliminarReservaphp($idReserva) {
+    // Actualizar la columna 'estado' a 3 en la base de datos
+    $conn = conectarBaseDeDatos();
+    $sql = "UPDATE reservas SET estado = 3 WHERE id_reserva = $idReserva";
+
+    if ($conn->query($sql) === TRUE) {
+        // La actualización fue exitosa
+        return "OK";
+    } else {
+        // La actualización falló
+        return "Error al actualizar la reserva: " . $conn->error;
+    }
+
+    // Cerrar la conexión
+    $conn->close();
 }
 ?>
 <!DOCTYPE html>
@@ -432,9 +448,9 @@ function obtenerNumeroPendientes() {
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Reservas del dia</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php 
-                                                    $numeroReservasDelDia = obtenerNumeroReservasDelDia();
-                                                    echo "$numeroReservasDelDia";
+                                                <?php
+                                                $numeroReservasDelDia = obtenerNumeroReservasDelDia();
+                                                echo "$numeroReservasDelDia";
                                                 ?>
                                             </div>
                                         </div>
@@ -486,8 +502,8 @@ function obtenerNumeroPendientes() {
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800" id="contadorPendiente">
                                                 <?php
-                                                    $numeroPendientes = obtenerNumeroPendientes();
-                                                    echo "$numeroPendientes";
+                                                $numeroPendientes = obtenerNumeroPendientes();
+                                                echo "$numeroPendientes";
                                                 ?>
                                             </div>
                                         </div>
@@ -501,7 +517,7 @@ function obtenerNumeroPendientes() {
                     </div>
                     <!-- Page Heading -->
                     <!-- Tabla -->
-                    <div id = "recarga" class="card shadow mb-4">
+                    <div id="recarga" class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">RESERVAS PARA HOY</h6>
                         </div>
@@ -518,22 +534,22 @@ function obtenerNumeroPendientes() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
+                                        <?php
                                         $reservas = obtenerReservas();
-                                        if ($reservas->num_rows > 0) {
-                                            while ($row = $reservas->fetch_assoc()) {
+                                        if($reservas->num_rows > 0) {
+                                            while($row = $reservas->fetch_assoc()) {
                                                 echo "<tr>
-                                                        <td>" . $row["nombre"] . "</td>
-                                                        <td>" . $row["num_personas"] . "</td>
-                                                        <td>" . $row["fecha"] . "</td>
-                                                        <td>" . $row["hora"] . "</td>
+                                                        <td>".$row["nombre"]."</td>
+                                                        <td>".$row["num_personas"]."</td>
+                                                        <td>".$row["fecha"]."</td>
+                                                        <td>".$row["hora"]."</td>
                                                         <td>
                                                             <a href=\"#\" class=\"btn btn-success btn-icon-split\">
                                                                 <span class=\"icon text-white-100\">
                                                                     <i class=\"fas fa-check\"></i>
                                                                 </span>
                                                             </a>
-                                                            <a href=\"#\" class=\"btn btn-danger btn-icon-split\" onclick=\"eliminarReserva(" . $row["id_reserva"] . ")\">
+                                                            <a href=\"#\" class=\"btn btn-danger btn-icon-split\" onclick=\"eliminarReserva(".$row["id_reserva"].")\">
                                                                 <span class=\"icon text-white-100\">
                                                                     <i class=\"fas fa-trash\"></i>
                                                                 </span>
@@ -546,30 +562,49 @@ function obtenerNumeroPendientes() {
                                         } else {
                                             echo "No hay reservas para el día de hoy después de la hora actual.";
                                         }
-                                    ?>
+                                        ?>
                                     </tbody>
                                 </table>
                                 <script>
-function eliminarReserva(idReserva) {
-    event.preventDefault();
-    console.log(1);
-    // Realizar una solicitud AJAX para actualizar la columna 'estado' a 3
-    $.ajax({
-        type: "POST",
-        url: "phps/eliminar_reserva.php",  // Nombre del archivo PHP que manejará la actualización
-        data: { id_reserva: idReserva },
-        success: function(response) {
-            // Actualizar la tabla o realizar otras acciones necesarias después de la eliminación
-            alert("Reserva eliminada con éxito");
-        },
-        error: function(xhr, status, error) {
-            // Manejar errores si es necesario
-            alert("Error al eliminar la reserva");
-        
-        }
-    });
-}
-</script>
+                                    $(document).ready(function () {
+                                        var dataTableSA = $("#dataTableSA").DataTable(); // Guarda la referencia a la instancia DataTable
+
+                                        setInterval(function () {
+                                            $("#recarga").load("indexPC.php #recarga", function () {
+                                                // Destruye la tabla actual antes de la recarga
+                                                dataTableSA.destroy();
+
+                                                // Vuelve a inicializar la tabla después de la recarga
+                                                $("#dataTableSA").DataTable({
+                                                    "language": {
+                                                        "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                                                    },
+                                                    "order": [[2, 'asc'], [3, 'asc']]
+                                                });
+                                            });
+                                            console.log(1);
+
+                                            //$.getScript("js/tdata.js");
+                                        }, 50000);
+                                    });
+                                    function eliminarReserva(idReserva) {
+                                        eliminarReservaphp(idReserva);
+                                        var dataTableSA = $("#dataTableSA").DataTable();
+                                        console.log(idReserva + " eliminado");
+                                        $("#recarga").load("indexPC.php #recarga", function () {
+                                                // Destruye la tabla actual antes de la recarga
+                                                dataTableSA.destroy();
+
+                                                // Vuelve a inicializar la tabla después de la recarga
+                                                $("#dataTableSA").DataTable({
+                                                    "language": {
+                                                        "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                                                    },
+                                                    "order": [[2, 'asc'], [3, 'asc']]
+                                                });
+                                            });
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -622,28 +657,28 @@ function eliminarReserva(idReserva) {
         </div>
     </div>
     <script type="text/javascript">
-    $(document).ready(function() {
-        var dataTableSA = $("#dataTableSA").DataTable(); // Guarda la referencia a la instancia DataTable
+        $(document).ready(function () {
+            var dataTableSA = $("#dataTableSA").DataTable(); // Guarda la referencia a la instancia DataTable
 
-        setInterval(function() {
-            $("#recarga").load("indexPC.php #recarga", function() {
-                // Destruye la tabla actual antes de la recarga
-                dataTableSA.destroy();
+            setInterval(function () {
+                $("#recarga").load("indexPC.php #recarga", function () {
+                    // Destruye la tabla actual antes de la recarga
+                    dataTableSA.destroy();
 
-                // Vuelve a inicializar la tabla después de la recarga
-                $("#dataTableSA").DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-                },
-                "order": [[2, 'asc'], [3, 'asc']]
-            });
-            });
-            console.log(1);
-            
-            //$.getScript("js/tdata.js");
-        }, 60000);
-    });
-</script>
+                    // Vuelve a inicializar la tabla después de la recarga
+                    $("#dataTableSA").DataTable({
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                        },
+                        "order": [[2, 'asc'], [3, 'asc']]
+                    });
+                });
+                console.log(1);
+
+                //$.getScript("js/tdata.js");
+            }, 5000);
+        });
+    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
