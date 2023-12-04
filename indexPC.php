@@ -31,10 +31,10 @@ function obtenerNumeroReservasDelDia() {
     // Obtener la fecha actual en el formato de la base de datos
     $fecha_actual = date("Y-m-d");
 
-    // Consulta para obtener el número de reservas del día en curso
+    // Consulta para obtener el número de reservas del día en curso y esl estado es confirmado
     $sql = "SELECT COUNT(*) as totalReservas
             FROM reservas
-            WHERE fecha = '$fecha_actual'";
+            WHERE fecha = '$fecha_actual' and estado = 1";
 
     $result = $conn->query($sql);
 
