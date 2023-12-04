@@ -1,113 +1,114 @@
 body {
-    text-align: center;
-    font-family: 'Varela Round', ubuntu, segoe ui, arial, sans-serif;
-  }
-  .carrousel {
-    width: 900px;
-    height: calc(450px);
-    margin: auto;
-    font-size: 0;
-    overflow: hidden;
-    position: relative;
-    text-align: left;
-  
-  }
-  /* Prueba */
-  .carrousel .screens {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    width: 900px;
-    height: 600px;
-    position: relative;
-    transform: translate(0%,-30%);
-  }
-  .carrousel .screens > li {
-    width: 0%;
-    height: 100%;
-    width: 50%;
-    height: 50%;
-    display: inline-block;
-    font-size: 15px;
-    overflow: hidden;
-    background: #bbb;
-    border-radius: 10px;
-    opacity: 0;
-    filter: blur(5px);
-    cursor: pointer;
-    position: absolute;
-    bottom: 0;
-    transform: translate(50%,0);
-    transition: all .7s;
-    pointer-events: none;
-  }
-  .carrousel .screens > li:hover {
-    filter: none;
-    opacity: 1;
-  }
-  .carrousel .screens > li.active {
-    opacity: 1;
-    filter: none;
-    width: 70%;
-    height: 70%;
-    z-index: 100;
-    transform: none;
-    transform: translate(20%,0);
-  }
-  .carrousel .screens > li.active, .carrousel .screens > li.left, .carrousel .screens > li.right {
-    pointer-events: all;
-  }
-  .carrousel .screens > li.left, .carrousel .screens > li.right {
-    transform: translate(0%,0);
-    opacity: .5;
-  }
-  .carrousel .screens > li.left {
-    transform: translate(0%,0);
-  }
-  .carrousel .screens > li.right {
-    transform: translate(100%,0);
-  }
-  .carrousel .screens > li p {
-    margin: 0;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    display: flex;
-    height: 100%;
-    color: #fff;
-    font-size: 20px;
-    pointer-events: none;
-  }
-  .carrousel .pagination {
-    list-style: none;
-    padding: 5px;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  .carrousel .pagination li {
-    display: inline-block;
-    vertical-align: middle;
-    width: 10px;
-    height: 10px;
-    margin: 5px;
-    opacity: .3;
-    cursor: pointer;
-    background: #000;
-    border-radius: 100%;
-    transition: all .2s;
-    background-size: cover;
-    background-position: center;
-  }
-  .carrousel .pagination li:hover, .carrousel .pagination li.active {
-    opacity: 1;
-  }
+  text-align: center;
+  font-family: 'Varela Round', ubuntu, segoe ui, arial, sans-serif;
+}
+.carrousel {
+  width: 900px;
+  height: calc(450px);
+  margin: auto;
+  font-size: 0;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+
+}
+
+.carrousel .screens {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  width: 900px;
+  height: 600px;
+  position: relative;
+  transform: translate(0%,-30%);
+}
+.carrousel .screens > li {
+  width: 0%;
+  height: 100%;
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  font-size: 15px;
+  overflow: hidden;
+  background: #bbb;
+  border-radius: 10px;
+  opacity: 0;
+  filter: blur(5px);
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  transform: translate(50%,0);
+  transition: all .7s;
+  pointer-events: none;
+}
+.carrousel .screens > li:hover {
+  filter: none;
+  opacity: 1;
+}
+.carrousel .screens > li.active {
+  opacity: 1;
+  filter: none;
+  width: 70%;
+  height: 70%;
+  z-index: 100;
+  transform: none;
+  transform: translate(20%,0);
+}
+.carrousel .screens > li.active, .carrousel .screens > li.left, .carrousel .screens > li.right {
+  pointer-events: all;
+}
+.carrousel .screens > li.left, .carrousel .screens > li.right {
+  transform: translate(0%,0);
+  opacity: .5;
+}
+.carrousel .screens > li.left {
+  transform: translate(0%,0);
+}
+.carrousel .screens > li.right {
+  transform: translate(100%,0);
+}
+.carrousel .screens > li p {
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  height: 100%;
+  color: #fff;
+  font-size: 20px;
+  pointer-events: none;
+}
+.carrousel .pagination {
+  list-style: none;
+  padding: 5px;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.carrousel .pagination li {
+  display: inline-block;
+  vertical-align: middle;
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  opacity: .3;
+  cursor: pointer;
+  background: #000;
+  border-radius: 100%;
+  transition: all .2s;
+  background-size: cover;
+  background-position: center;
+}
+.carrousel .pagination li:hover, .carrousel .pagination li.active {
+  opacity: 1;
+}
   #s1 {
-    background-image: url('img/imglanding/chihiro/sushi.jpg');
+    background-image: url('img/imglanding/paella.jpg');
+
       background-size: cover;
       background-position: center;
       display: flex;
@@ -134,13 +135,19 @@ body {
     background-size: cover;
     background-position: center;
   }
+  #s6 {
+    background-image: url('img/imglanding/chihiro/sushi.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  
   
   .carrousel .screens li img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  #s1, #s2, #s3, #s4, #s5{
+  #s1, #s2, #s3, #s4, #s5, #s6{
     background-size: cover;
     background-position: center;
   }
@@ -148,46 +155,54 @@ body {
   .content-wrapper {
     display: flex;
     justify-content: space-between; 
-    max-width: 1700px; /* Ajusta el ancho según tu diseño */
+    max-width: 1700px;
     margin: auto;
     padding: 20px;
   }
-  
-  
-  /* Estilos para el formulario */
+/* MIRAR ESTO */
   .formulario {
-    width: 35%; /* Ajusta el ancho del formulario */
-    /* Otros estilos para el formulario */
+    width: 35%; 
+
   }
-  
-  /* ------------------------------------ */
-  
+ 
   .formulario {
     max-width: 400px;
-    margin: 20px auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f9f9f9;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
+    width: 80%;
+    margin: 0 auto;
   }
-  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
+}
   .form-group {
     margin-bottom: 15px;
+    width: calc(50% - 10px);
   }
-  
+  .form-group label {
+    display: block; /* Mostrar etiquetas en bloque para alinearlas */
+    margin-bottom: 5px;
+}
+ 
   label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
   }
-  
+  /* kaka d baca */
   input[type="date"],
   select,
   input[type="number"],
   input[type="email"],
   input[type="nombre"],
+  input[type="tel"],
   button {
     width: calc(100% - 12px);
     padding: 10px;
