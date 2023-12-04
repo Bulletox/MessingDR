@@ -32,7 +32,7 @@ try {
         $fecha = limpiar_datos($_POST["fecha"]);
         $hora = limpiar_datos($_POST["hora"]);
         $num_personas = limpiar_datos($_POST["cantidad"]);
-
+        $is_restaurante = $_POST["is_restaurante"];
         // Verificar si el correo ya está registrado
         $sqlVerificarCorreo = "SELECT id_usuario FROM usuario WHERE correo = ?";
         $stmtVerificarCorreo = $conn->prepare($sqlVerificarCorreo);
@@ -64,11 +64,11 @@ try {
         $estado = ($num_personas > 10) ? 2 : 1;
 
         // Creado y ejecutado la query para la inserción de los datos en la tabla "Reservas"
-        $sqlReservas = "INSERT INTO reservas (fecha, num_personas, estado, id_usuario, hora) VALUES (?, ?, ?, ?, ?)";
+        $sqlReservas = "INSERT INTO reservas (fecha, num_personas, estado, id_usuario, hora, id_restaurante) VALUES (?, ?, ?, ?, ?)";
         $stmtReservas = $conn->prepare($sqlReservas);
 
         // Vinculación de los datos para la tabla "Reservas"
-        $stmtReservas->bind_param("siiis", $fecha, $num_personas, $estado, $id_usuario, $hora);
+        $stmtReservas->bind_param("siiisi", $fecha, $num_personas, $estado, $id_usuario, $hora, $is_restaurante);
 
         // Ejecutar la consulta para la tabla "Reservas"
         if ($stmtReservas->execute()) {

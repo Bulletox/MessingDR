@@ -1,30 +1,37 @@
 <?php
-session_start() or die('Error iniciando gestor de variables de sesión');;
+session_start() or die('Error iniciando gestor de variables de sesión');
+;
 
 // Verificar si el usuario está autenticado
-if (!isset($_SESSION['username'])) {
+if(!isset($_SESSION['username'])) {
     //header("Location: index.html"); // Redirecciona a la página de inicio de sesión si no está autenticado
     header('Location: login.php');
 }
 
 $username = $_SESSION['username'];
-
-
+$id_restaurante = $_SESSION['id_restaurante'];
+$nombre_restaurante = $_SESSION['nombre_restaurante'];
 include "phps/Conexion_BBDD.php";
+
 function obtenerReservas() {
     // Obtener la conexión
     $conn = conectarBaseDeDatos();
-
+    $id_restaurante = $_SESSION["id_restaurante"];
     // Obtener la hora actual en el formato de la base de datos
     $fechaHoraActual = date("Y-m-d H:i:s");
 
     // Calcular la fecha y hora 1 hora atrás
     $fechaHoraHaceUnaHora = date("Y-m-d H:i:s", strtotime("-1 hour", strtotime($fechaHoraActual)));
+//uso corriente de la funcion:
+    // $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora, usuario.id_usuario, reservas.id_reserva
+    //         FROM reservas
+    //         INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
+    //         WHERE fecha >= CURDATE() AND hora >= '$fechaHoraHaceUnaHora' AND estado = 1 AND id_restaurante = '$id_restaurante'";
 
     $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora, usuario.id_usuario, reservas.id_reserva
             FROM reservas
             INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
-            WHERE fecha >= CURDATE() AND hora >= '$fechaHoraHaceUnaHora' AND estado = 1";
+            WHERE fecha >= CURDATE() AND estado = 1 AND id_restaurante = '$id_restaurante'";
 
     $result = $conn->query($sql);
 
@@ -37,14 +44,14 @@ function obtenerReservas() {
 function obtenerNumeroReservasDelDia() {
     // Obtener la conexión
     $conn = conectarBaseDeDatos();
-
+    $id_restaurante = $_SESSION["id_restaurante"];
     // Obtener la fecha actual en el formato de la base de datos
     $fecha_actual = date("Y-m-d");
 
     // Consulta para obtener el número de reservas del día en curso y esl estado es confirmado
     $sql = "SELECT COUNT(*) as totalReservas
             FROM reservas
-            WHERE fecha = '$fecha_actual' and estado = 1";
+            WHERE fecha = '$fecha_actual' and estado = 1 and id_restaurante = '$id_restaurante'";
 
     $result = $conn->query($sql);
 
@@ -64,12 +71,12 @@ function obtenerNumeroReservasDelDia() {
 function obtenerNumeroPendientes() {
     // Obtener la conexión
     $conn = conectarBaseDeDatos();
-
+    $id_restaurante = $_SESSION["id_restaurante"];
 
     // Consulta para obtener el número de reservas del día en curso
     $sql = "SELECT COUNT(*) as totalReservas
             FROM reservas
-            WHERE estado = 2";
+            WHERE estado = 2 and id_restaurante = '$id_restaurante'";
 
     $result = $conn->query($sql);
 
@@ -351,7 +358,10 @@ function obtenerNumeroPendientes() {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 medium">
+                                    <?php $nombre_restaurante = $_SESSION['nombre_restaurante'];
+                                    echo "$nombre_restaurante" ?>
+                                </span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -464,7 +474,7 @@ function obtenerNumeroPendientes() {
                         </div>
 
                         <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div id = "#recargaP" class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -507,11 +517,12 @@ function obtenerNumeroPendientes() {
                                     </thead>
                                     <tbody>
                                         <?php
+                                        $id_restaurante = $_SESSION['id_restaurante'];
                                         $reservas = obtenerReservas();
                                         if($reservas->num_rows > 0) {
                                             while($row = $reservas->fetch_assoc()) {
                                                 echo "<tr>
-                                                        <td>".$row["nombre"]."</td>
+                                                        <td>".$row["nombre"]."$id_restaurante</td>
                                                         <td>".$row["num_personas"]."</td>
                                                         <td>".$row["fecha"]."</td>
                                                         <td>".$row["hora"]."</td>
@@ -532,7 +543,8 @@ function obtenerNumeroPendientes() {
 
                                             echo "</tbody></table>";
                                         } else {
-                                            echo "No hay reservas para el día de hoy después de la hora actual.";
+                                            echo "No hay reservas para el día de hoy después de la hora actual. id restaurante";
+
                                         }
                                         ?>
                                     </tbody>
@@ -591,7 +603,7 @@ function obtenerNumeroPendientes() {
                                             console.log("Eliminación cancelada.");
                                         }
                                     }
-                                    
+
                                 </script>
                             </div>
                         </div>
@@ -639,7 +651,7 @@ function obtenerNumeroPendientes() {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="phps/logout.php">Logout</a>
                 </div>
             </div>
         </div>
