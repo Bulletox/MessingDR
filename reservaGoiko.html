@@ -1,60 +1,79 @@
-    <!DOCTYPE html>
-    <html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="css/stylesgoiko.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/stylesgoiko.css">
+</head>
 
-    <body>
-        <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
-        <h1>Goiko Grill</h1>
-        <div class="content-wrapper">
-            <div class="carrousel">
-                <ul class="screens">
-                    <li id="s1">
-                        <img src="img/imglanding/goiko/goikogrill.jpg" alt="Screen 1">
-                    </li>
-                    <li id="s2" class="left">
-                        <img src="img/imglanding/goiko/hamburgesaKevin.jpg" alt="Screen 2">
-                    </li>
-                    <li id="s3" class="active">
-                        <img src="img/imglanding/goiko/hamburguesaYankee-1.jpg" alt="Screen 3">
-                    </li>
-                    <li id="s4">
-                        <img src="img/imglanding/goiko/hamburguesa6.jpg" alt="Screen 5">
-                    </li>
-                    <li id="s5">
-                        <img src="img/imglanding/goiko/locall.jpg" alt="Screen 4">
-                    </li>
-                    <!-- <li id="s6">
+<body>
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
+    <h1>Goiko Grill</h1>
+    <div class="content-wrapper">
+        <div class="carrousel">
+            <ul class="screens">
+                <li id="s1">
+                    <img src="img/imglanding/goiko/goikogrill.jpg" alt="Screen 1">
+                </li>
+                <li id="s2" class="left">
+                    <img src="img/imglanding/goiko/hamburgesaKevin.jpg" alt="Screen 2">
+                </li>
+                <li id="s3" class="active">
+                    <img src="img/imglanding/goiko/hamburguesaYankee-1.jpg" alt="Screen 3">
+                </li>
+                <li id="s4">
+                    <img src="img/imglanding/goiko/hamburguesa6.jpg" alt="Screen 5">
+                </li>
+                <li id="s5">
+                    <img src="img/imglanding/goiko/locall.jpg" alt="Screen 4">
+                </li>
+                <!-- <li id="s6">
                 <p>Screen 6</p>
             </li>
             <li id="s7">
                 <p>Screen 7</p>
             </li> -->
-                </ul>
-                <div class="pagination"></div>
+            </ul>
+            <div class="pagination"></div>
 
-            </div>
-            <div class="formulario">
-                <h2>Reserva</h2>
-                <form action="phps/Conexion_MySQLi.php" method="post">
-                    <!-- <div class="form-row"> -->
-                        <div class="form-group">
-                            <label for="nombre">Nombre:</label>
-                            <input type="nombre" id="nombre" name="nombre" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="fecha">Fecha:</label>
-                            <input type="date" id="fecha" name="fecha" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="hora">Hora:</label>
-                            <select name="hora" id="hora" required>
-                                <option value="">Seleccionar hora</option>
+        </div>
+        <div class="formulario">
+            <h2>Reserva</h2>
+            <form action="phps/Conexion_MySQLi.php" method="post">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="nombre" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Fecha:</label>
+                        <input type="date" id="fecha" name="fecha" required>
+                    </div>
+                    <script>
+                        function obtenerFechaActual() {
+                            const today = new Date();
+                            const year = today.getFullYear();
+                            let month = today.getMonth() + 1;
+                            let day = today.getDate();
+
+                            month = month < 10 ? '0' + month : month;
+                            day = day < 10 ? '0' + day : day;
+
+                            return `${year}-${month}-${day}`;
+                        }
+
+                        const fechaInput = document.getElementById('fecha');
+
+                        // Establecer la fecha mínima en el campo de fecha
+                        fechaInput.min = obtenerFechaActual();
+                    </script>
+                    <div class="form-group">
+                        <label for="hora">Hora:</label>
+                        <select name="hora" id="hora" required>
+                            <optgroup label="Horarios de Almuerzo">
+                                <option value="10:00">10:00</option>
                                 <option value="13:00">13:00</option>
                                 <option value="13:15">13:15</option>
                                 <option value="13:30">13:30</option>
@@ -66,55 +85,93 @@
                                 <option value="15:00">15:00</option>
                                 <option value="15:15">15:15</option>
                                 <option value="15:30">15:30</option>
+                            </optgroup>
+                            <optgroup label="Horarios de Cena">
+                                <option value="18:00">20:00</option>
+                                <option value="19:00">20:15</option>
+                                <option value="20:00">20:30</option>
+                                <option value="21:00">20:45</option>
+                                <option value="22:00">21:00</option>
+                                <option value="18:00">21:15</option>
+                                <option value="19:00">21:30</option>
+                                <option value="20:00">21:45</option>
+                                <option value="21:00">22:00</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <script>
+                        // Obtener el elemento select
+                        var selectElement = document.getElementById("hora");
 
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="cantidad">Cantidad de personas:</label>
-                            <input type="number" id="cantidad" name="cantidad" min="1" max="20" required>
-                            <span class="message">Por favor, contacte con el restaurante si son más de 20 personas.</span>
+                        // Obtener la hora actual
+                        var currentTime = new Date();
+                        var currentHour = currentTime.getHours();
+                        var currentMinutes = currentTime.getMinutes();
 
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Correo electrónico:</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                         <div class="form-group">
+                        // Convertir la hora actual a un formato comparable (HH:mm)
+                        var currentFormattedTime = currentHour + ":" + (currentMinutes < 10 ? "0" : "") + currentMinutes;
+
+                        // Recorrer las opciones y eliminar las que ya han pasado
+                        for (var i = selectElement.options.length - 1; i >= 0; i--) {
+                            var optionValue = selectElement.options[i].value;
+
+                            // Comparar la hora actual con la hora de la opción
+                            if (optionValue !== "" && optionValue <= currentFormattedTime) {
+                                selectElement.remove(i);
+                            }
+                        }
+                    </script>
+
+
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad de personas:</label>
+                        <input type="number" id="cantidad" name="cantidad" min="1" max="20" required>
+                        <span class="message">Por favor, contacte con el restaurante si son más de 20 personas.</span>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
                         <label for="nombre">Número</label>
                         <input type="nombre" id="nombre" name="nombre" required>
                     </div>
-                        <button> <span>Enviar</span></button>
-                        
-                    <!-- </div> -->
-                </form>
-            </div>
+                    <button type="submit" id="enviarBtn"> <span>Enviar</span></button>
+                </div>
+                <script>
+                    // Obtener el elemento de fecha
+                    var fechaInput = document.getElementById('fecha');
+
+                    // Obtener la fecha actual en formato ISO (YYYY-MM-DD)
+                    var fechaActual = new Date().toISOString().split('T')[0];
+
+                    // Establecer el valor mínimo de fecha en el input de fecha
+                    fechaInput.min = fechaActual;
+                </script>
+            </form>
         </div>
-        <div id="popup" class="popup-overlay">
-            <div class="popup-content">
-                <span class="close-btn" onclick="closePopup()">×</span>
-                <div id="reservationDetails"></div>
-            </div>
+    </div>
+    <div id="popup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closePopup()">×</span>
+            <div id="reservationDetails"></div>
         </div>
-        <!-- ... (tu código actual) ... -->
-        <div class="abajo">
-            <div class="ubicacion">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d14244.685736567304!2d2.10812428808647!3d41.36156244186227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sgoiko%20grill!5e0!3m2!1ses!2ses!4v1700565753584!5m2!1ses!2ses"
-                    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-            <div class="formulario">
-                <h1>holi personis</h1>
-            </div>
+    </div>
 
+    <div class="abajo">
+        <div class="ubicacion">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d14244.685736567304!2d2.10812428808647!3d41.36156244186227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sgoiko%20grill!5e0!3m2!1ses!2ses!4v1700565753584!5m2!1ses!2ses"
+                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
+        <div class="formulario">
+            <h1>holi personis</h1>
+        </div>
+    </div>
+    <script src="js/reserva.js"></script>
 
+</body>
 
-        <!-- ... (tu código actual) ... -->
-
-
-        <script src="js/reserva.js"></script>
-
-    </body>
-
-    </html>
+</html>

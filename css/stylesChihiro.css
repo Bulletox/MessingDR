@@ -148,20 +148,16 @@ body {
   .content-wrapper {
     display: flex;
     justify-content: space-between; 
-    max-width: 1700px; /* Ajusta el ancho según tu diseño */
+    max-width: 1700px;
     margin: auto;
     padding: 20px;
   }
-  
-  
-  /* Estilos para el formulario */
+/* MIRAR ESTO */
   .formulario {
-    width: 35%; /* Ajusta el ancho del formulario */
-    /* Otros estilos para el formulario */
+    width: 35%; 
+
   }
-  
-  /* ------------------------------------ */
-  
+ 
   .formulario {
     max-width: 400px;
     padding: 20px;
@@ -199,6 +195,7 @@ body {
   input[type="number"],
   input[type="email"],
   input[type="nombre"],
+  input[type="tel"],
   button {
     width: calc(100% - 12px);
     padding: 10px;
