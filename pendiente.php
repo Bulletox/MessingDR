@@ -1,9 +1,20 @@
 <?php
+session_start() or die('Error iniciando gestor de variables de sesión');;
+
+// Verificar si el usuario está autenticado
+if (!isset($_SESSION['username'])) {
+    //header("Location: index.html"); // Redirecciona a la página de inicio de sesión si no está autenticado
+    header('Location: login.php');
+}
+$username = $_SESSION['username'];
+$id_restaurante = $_SESSION['id_restaurante'];  
+$nombre_restaurante = $_SESSION['nombre_restaurante'];
+
 include "phps/Conexion_BBDD.php";
 function obtenerReservas() {
     // Obtener la conexión
     $conn = conectarBaseDeDatos();
-
+    $id_restaurante = $_SESSION['id_restaurante'];  
     // Obtener la hora actual en el formato de la base de datos
     $fechaHoraActual = date("Y-m-d H:i:s");
 
@@ -12,7 +23,7 @@ function obtenerReservas() {
     $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora, usuario.id_usuario, reservas.id_reserva
             FROM reservas
             INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
-            WHERE estado = 2;";
+            WHERE estado = 2 and id_restaurante = $id_restaurante";
             
     $result = $conn->query($sql);
 
@@ -93,25 +104,6 @@ function obtenerReservas() {
             <div class="sidebar-heading">
                 Interface
             </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-
-            <!-- Divider -->
-
-
-            <!-- Heading -->
-
-
-            <!-- Nav Item - Pages Collapse Menu -->
-
-
-            <!-- Nav Item - Tables -->
-
-
-            <!-- Divider -->
-
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -296,7 +288,7 @@ function obtenerReservas() {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php $nombre_restaurante = $_SESSION['nombre_restaurante']; echo "$nombre_restaurante" ?></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -338,13 +330,13 @@ function obtenerReservas() {
                     <!-- Content Row -->
                     <!-- Page Heading -->
                     <!-- Tabla -->
-                    <div class="card shadow mb-4">
+                    <div id="#recarga" class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Solicitud de reservas</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTableSA" width="100%" cellspacing="0">
+                                <table id="#recarga" class="table table-bordered" id="dataTableSA" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Nombre</th>
@@ -406,7 +398,7 @@ function obtenerReservas() {
                                             console.log(1);
 
                                             //$.getScript("js/tdata.js");
-                                        }, 50000);
+                                        }, 5000);
                                     });
                                     function eliminarReserva(idReserva) {
                                         // Utiliza la función confirm para mostrar una ventana emergente

@@ -1,30 +1,37 @@
 <?php
-session_start() or die('Error iniciando gestor de variables de sesión');;
+session_start() or die('Error iniciando gestor de variables de sesión');
+;
 
 // Verificar si el usuario está autenticado
-if (!isset($_SESSION['username'])) {
+if(!isset($_SESSION['username'])) {
     //header("Location: index.html"); // Redirecciona a la página de inicio de sesión si no está autenticado
     header('Location: login.php');
 }
 
 $username = $_SESSION['username'];
-$id_restaurante = $_SESSION['id_restaurante'];  
+$id_restaurante = $_SESSION['id_restaurante'];
 $nombre_restaurante = $_SESSION['nombre_restaurante'];
 include "phps/Conexion_BBDD.php";
+
 function obtenerReservas() {
     // Obtener la conexión
     $conn = conectarBaseDeDatos();
-    $id_restaurante = $_SESSION["id_restaurante"]; 
+    $id_restaurante = $_SESSION["id_restaurante"];
     // Obtener la hora actual en el formato de la base de datos
     $fechaHoraActual = date("Y-m-d H:i:s");
 
     // Calcular la fecha y hora 1 hora atrás
     $fechaHoraHaceUnaHora = date("Y-m-d H:i:s", strtotime("-1 hour", strtotime($fechaHoraActual)));
+//uso corriente de la funcion:
+    // $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora, usuario.id_usuario, reservas.id_reserva
+    //         FROM reservas
+    //         INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
+    //         WHERE fecha >= CURDATE() AND hora >= '$fechaHoraHaceUnaHora' AND estado = 1 AND id_restaurante = '$id_restaurante'";
 
     $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora, usuario.id_usuario, reservas.id_reserva
             FROM reservas
             INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
-            WHERE fecha >= CURDATE() AND hora >= '$fechaHoraHaceUnaHora' AND estado = 1 AND id_restaurante = '$id_restaurante'";
+            WHERE fecha >= CURDATE() AND estado = 1 AND id_restaurante = '$id_restaurante'";
 
     $result = $conn->query($sql);
 
@@ -37,7 +44,7 @@ function obtenerReservas() {
 function obtenerNumeroReservasDelDia() {
     // Obtener la conexión
     $conn = conectarBaseDeDatos();
-    $id_restaurante = $_SESSION["id_restaurante"]; 
+    $id_restaurante = $_SESSION["id_restaurante"];
     // Obtener la fecha actual en el formato de la base de datos
     $fecha_actual = date("Y-m-d");
 
@@ -64,7 +71,7 @@ function obtenerNumeroReservasDelDia() {
 function obtenerNumeroPendientes() {
     // Obtener la conexión
     $conn = conectarBaseDeDatos();
-    $id_restaurante = $_SESSION["id_restaurante"]; 
+    $id_restaurante = $_SESSION["id_restaurante"];
 
     // Consulta para obtener el número de reservas del día en curso
     $sql = "SELECT COUNT(*) as totalReservas
@@ -351,7 +358,10 @@ function obtenerNumeroPendientes() {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 medium"><?php $nombre_restaurante = $_SESSION['nombre_restaurante']; echo "$nombre_restaurante" ?> </span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 medium">
+                                    <?php $nombre_restaurante = $_SESSION['nombre_restaurante'];
+                                    echo "$nombre_restaurante" ?>
+                                </span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -464,7 +474,7 @@ function obtenerNumeroPendientes() {
                         </div>
 
                         <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div id = "#recargaP" class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -593,7 +603,7 @@ function obtenerNumeroPendientes() {
                                             console.log("Eliminación cancelada.");
                                         }
                                     }
-                                    
+
                                 </script>
                             </div>
                         </div>
