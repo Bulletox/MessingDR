@@ -9,7 +9,7 @@ function obtenerReservas() {
 
     // Calcular la fecha y hora 1 hora atrás
 
-    $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora
+    $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora, usuario.id_usuario, reservas.id_reserva
             FROM reservas
             INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
             WHERE estado = 2;";
@@ -44,7 +44,7 @@ function obtenerReservas() {
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -355,39 +355,124 @@ function obtenerReservas() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php 
+                                        <?php
                                         $reservas = obtenerReservas();
-                                        if ($reservas->num_rows > 0) {
-                                                            while ($row = $reservas->fetch_assoc()) {
-                                                                echo "<tr>
-                                                                        <td>" . $row["nombre"] . "</td>
-                                                                        <td>" . $row["num_personas"] . "</td>
-                                                                        <td>" . $row["fecha"] . "</td>
-                                                                        <td>" . $row["hora"] . "</td>
-                                                                        <td>
-                                                                            <a href=\"#\" class=\"btn btn-success btn-icon-split\">
-                                                                                <span class=\"icon text-white-100\">
-                                                                                    <i class=\"fas fa-check\"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                            <a href=\"#\" class=\"btn btn-danger btn-icon-split\">
-                                                                                <span class=\"icon text-white-100\">
-                                                                                    <i class=\"fas fa-trash\"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </td>
-                                                                    </tr>";
-                                                            }
+                                        if($reservas->num_rows > 0) {
+                                            while($row = $reservas->fetch_assoc()) {
+                                                echo "<tr>
+                                                        <td>".$row["nombre"]."</td>
+                                                        <td>".$row["num_personas"]."</td>
+                                                        <td>".$row["fecha"]."</td>
+                                                        <td>".$row["hora"]."</td>
+                                                        <td>
+                                                            <a href=\"#\" class=\"btn btn-success btn-icon-split\"onclick=\"confirmarReserva(".$row["id_reserva"].")\">
+                                                                <span class=\"icon text-white-100\">
+                                                                    <i class=\"fas fa-check\"></i>
+                                                                </span>
+                                                            </a>
+                                                            <a href=\"#\" class=\"btn btn-danger btn-icon-split\" onclick=\"eliminarReserva(".$row["id_reserva"].")\">
+                                                                <span class=\"icon text-white-100\">
+                                                                    <i class=\"fas fa-trash\"></i>
+                                                                </span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>";
+                                            }
 
-                                                            echo "</tbody></table>";
-                                                        } else {
-                                                            echo "No hay reservas pendientes";
-                                                        }
-
-                                                         ?>
+                                            echo "</tbody></table>";
+                                        } else {
+                                            echo "No hay reservas para el día de hoy después de la hora actual.";
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
+                                <script>
+                                    $(document).ready(function () {
+                                        var dataTableSA = $("#dataTableSA").DataTable(); // Guarda la referencia a la instancia DataTable
 
+                                        setInterval(function () {
+                                            $("#recarga").load("indexPC.php #recarga", function () {
+                                                // Destruye la tabla actual antes de la recarga
+                                                dataTableSA.destroy();
+
+                                                // Vuelve a inicializar la tabla después de la recarga
+                                                $("#dataTableSA").DataTable({
+                                                    "language": {
+                                                        "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                                                    },
+                                                    "order": [[2, 'asc'], [3, 'asc']]
+                                                });
+                                            });
+                                            console.log(1);
+
+                                            //$.getScript("js/tdata.js");
+                                        }, 50000);
+                                    });
+                                    function eliminarReserva(idReserva) {
+                                        // Utiliza la función confirm para mostrar una ventana emergente
+                                        var confirmacion = confirm("¿Estás seguro de que deseas CANCELAR esta reserva?");
+
+                                        // Si el usuario hace clic en "Aceptar", entonces realiza la eliminación
+                                        if (confirmacion) {
+                                            $.ajax({
+                                                url: 'phps/eliminar_reserva.php',
+                                                type: 'POST',
+                                                data: { idReserva: idReserva },
+                                                success: function (response) {
+                                                    console.log(response);
+                                                    var dataTableSA = $("#dataTableSA").DataTable();
+                                                    console.log(idReserva + " eliminado");
+                                                    $("#recarga").load("indexPC.php #recarga", function () {
+                                                        dataTableSA.destroy();
+                                                        $("#dataTableSA").DataTable({
+                                                            "language": {
+                                                                "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                                                            },
+                                                            "order": [[2, 'asc'], [3, 'asc']]
+                                                        });
+                                                    });
+                                                },
+                                                error: function (error) {
+                                                    console.error('Error al eliminar reserva:', error);
+                                                }
+                                            });
+                                        } else {
+                                            console.log("Eliminación cancelada.");
+                                        }
+                                    }
+                                    function confirmarReserva(idReserva) {
+                                        // Utiliza la función confirm para mostrar una ventana emergente
+                                        var confirmacion = confirm("¿Estás seguro de que deseas CONFIRMAR esta reserva?");
+
+                                        // Si el usuario hace clic en "Aceptar", entonces realiza la eliminación
+                                        if (confirmacion) {
+                                            $.ajax({
+                                                url: 'phps/confirmar_reserva.php',
+                                                type: 'POST',
+                                                data: { idReserva: idReserva },
+                                                success: function (response) {
+                                                    console.log(response);
+                                                    var dataTableSA = $("#dataTableSA").DataTable();
+                                                    console.log(idReserva + " Confirmado");
+                                                    $("#recarga").load("indexPC.php #recarga", function () {
+                                                        dataTableSA.destroy();
+                                                        $("#dataTableSA").DataTable({
+                                                            "language": {
+                                                                "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                                                            },
+                                                            "order": [[2, 'asc'], [3, 'asc']]
+                                                        });
+                                                    });
+                                                },
+                                                error: function (error) {
+                                                    console.error('Error al confirmar reserva:', error);
+                                                }
+                                            });
+                                        } else {
+                                            console.log("Eliminación cancelada.");
+                                        }
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -462,42 +547,3 @@ function obtenerReservas() {
 
 </html>
 
-<div class="carousel-item active">
-    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-        <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-    </svg>
-    <div class="container">
-        <div class="carousel-caption text-start">
-            <h1>Example headline.</h1>
-            <p class="opacity-75">Some representative placeholder content for the first slide of the
-                carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
-        </div>
-    </div>
-</div>
-<div class="carousel-item">
-    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-        <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-    </svg>
-    <div class="container">
-        <div class="carousel-caption">
-            <h1>Another example headline.</h1>
-            <p>Some representative placeholder content for the second slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
-        </div>
-    </div>
-</div>
-<div class="carousel-item">
-    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-        <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-    </svg>
-    <div class="container">
-        <div class="carousel-caption text-end">
-            <h1>One more for good measure.</h1>
-            <p>Some representative placeholder content for the third slide of this carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
-        </div>
-    </div>
