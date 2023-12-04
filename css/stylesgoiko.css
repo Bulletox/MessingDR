@@ -194,6 +194,7 @@ select,
 input[type="number"],
 input[type="email"],
 input[type="nombre"],
+input[type="tel"],
 button {
   width: calc(100% - 12px);
   padding: 10px;

@@ -134,9 +134,23 @@
                         <input type="email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="nombre">Número</label>
-                        <input type="nombre" id="nombre" name="nombre" required>
+                        <label for="telefono">Número de teléfono</label>
+                        <input type="tel" id="telefono" name="telefono" required pattern="[0-9]{9}"
+                            title="Por favor, ingresa un número de teléfono de 9 dígitos.">
+                        <span class="message">Ingresa un número de teléfono válido (ej. +123456789).</span>
                     </div>
+
+                    <script>
+                        // Obtener el campo de teléfono
+                        const telefonoInput = document.getElementById('telefono');
+
+                        // Validar el número de teléfono cuando cambie el valor
+                        telefonoInput.addEventListener('input', function () {
+                            telefonoInput.setCustomValidity(''); // Restablecer el mensaje de error
+                            telefonoInput.checkValidity(); // Verificar validez del campo
+                        });
+                    </script>
+
                     <button type="submit" id="enviarBtn"> <span>Enviar</span></button>
                 </div>
                 <script>
