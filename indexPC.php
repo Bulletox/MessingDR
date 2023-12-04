@@ -11,7 +11,7 @@ function obtenerReservas() {
     // Calcular la fecha y hora 1 hora atrás
     $fechaHoraHaceUnaHora = date("Y-m-d H:i:s", strtotime("-1 hour", strtotime($fechaHoraActual)));
 
-    $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora
+    $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora, usuario.id_usuario, reservas.id_reserva
             FROM reservas
             INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
             WHERE fecha >= CURDATE() AND hora >= '$fechaHoraHaceUnaHora' AND estado = 1";
@@ -75,22 +75,6 @@ function obtenerNumeroPendientes() {
     $conn->close();
 
     return $numeroPendientes;
-}
-function eliminarReservaphp($idReserva) {
-    // Actualizar la columna 'estado' a 3 en la base de datos
-    $conn = conectarBaseDeDatos();
-    $sql = "UPDATE reservas SET estado = 3 WHERE id_reserva = $idReserva";
-
-    if ($conn->query($sql) === TRUE) {
-        // La actualización fue exitosa
-        return "OK";
-    } else {
-        // La actualización falló
-        return "Error al actualizar la reserva: " . $conn->error;
-    }
-
-    // Cerrar la conexión
-    $conn->close();
 }
 ?>
 <!DOCTYPE html>
@@ -172,28 +156,6 @@ function eliminarReservaphp($idReserva) {
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-
-            <!-- Divider -->
-
-
-            <!-- Heading -->
-
-
-            <!-- Nav Item - Pages Collapse Menu -->
-
-
-            <!-- Nav Item - Tables -->
-
-
-            <!-- Divider -->
 
 
             <!-- Sidebar Toggler (Sidebar) -->
@@ -588,22 +550,38 @@ function eliminarReservaphp($idReserva) {
                                         }, 50000);
                                     });
                                     function eliminarReserva(idReserva) {
-                                        eliminarReservaphp(idReserva);
-                                        var dataTableSA = $("#dataTableSA").DataTable();
-                                        console.log(idReserva + " eliminado");
-                                        $("#recarga").load("indexPC.php #recarga", function () {
-                                                // Destruye la tabla actual antes de la recarga
-                                                dataTableSA.destroy();
+                                        // Utiliza la función confirm para mostrar una ventana emergente
+                                        var confirmacion = confirm("¿Estás seguro de que deseas eliminar esta reserva?");
 
-                                                // Vuelve a inicializar la tabla después de la recarga
-                                                $("#dataTableSA").DataTable({
-                                                    "language": {
-                                                        "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-                                                    },
-                                                    "order": [[2, 'asc'], [3, 'asc']]
-                                                });
+                                        // Si el usuario hace clic en "Aceptar", entonces realiza la eliminación
+                                        if (confirmacion) {
+                                            $.ajax({
+                                                url: 'phps/eliminar_reserva.php',
+                                                type: 'POST',
+                                                data: { idReserva: idReserva },
+                                                success: function (response) {
+                                                    console.log(response);
+                                                    var dataTableSA = $("#dataTableSA").DataTable();
+                                                    console.log(idReserva + " eliminado");
+                                                    $("#recarga").load("indexPC.php #recarga", function () {
+                                                        dataTableSA.destroy();
+                                                        $("#dataTableSA").DataTable({
+                                                            "language": {
+                                                                "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                                                            },
+                                                            "order": [[2, 'asc'], [3, 'asc']]
+                                                        });
+                                                    });
+                                                },
+                                                error: function (error) {
+                                                    console.error('Error al eliminar reserva:', error);
+                                                }
                                             });
+                                        } else {
+                                            console.log("Eliminación cancelada.");
+                                        }
                                     }
+                                    
                                 </script>
                             </div>
                         </div>
@@ -656,6 +634,7 @@ function eliminarReservaphp($idReserva) {
             </div>
         </div>
     </div>
+
     <script type="text/javascript">
         $(document).ready(function () {
             var dataTableSA = $("#dataTableSA").DataTable(); // Guarda la referencia a la instancia DataTable
