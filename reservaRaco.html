@@ -32,9 +32,6 @@
                 <li id="s6">
                     <img src="img/imglanding/raco/raco.jpg" alt="Screen 6">
                 </li>
-                <!-- <li id="s7">
-            <p>Screen 7</p>
-        </li>  -->
             </ul>
             <div class="pagination"></div>
 
@@ -52,22 +49,23 @@
                         <input type="date" id="fecha" name="fecha" required>
                     </div>
                     <script>
-                        function obtenerFechaActual() {
-                            const today = new Date();
-                            const year = today.getFullYear();
-                            let month = today.getMonth() + 1;
-                            let day = today.getDate();
-
-                            month = month < 10 ? '0' + month : month;
-                            day = day < 10 ? '0' + day : day;
-
-                            return `${year}-${month}-${day}`;
-                        }
-
                         const fechaInput = document.getElementById('fecha');
-
-                        // Establecer la fecha mínima en el campo de fecha
-                        fechaInput.min = obtenerFechaActual();
+                        const today = new Date();
+                        const year = today.getFullYear();
+                        let month = today.getMonth() + 1;
+                        let day = today.getDate();
+                    
+                        month = month < 10 ? '0' + month : month;
+                        day = day < 10 ? '0' + day : day;
+                    
+                        const fechaActual = `${year}-${month}-${day}`;
+                        const maxYear = year + 2; // Cambiado a un año desde la fecha actual
+                    
+                        // Establecer la fecha mínima en el campo de fecha como la fecha actual
+                        fechaInput.min = fechaActual;
+                    
+                        // Establecer la fecha máxima en el campo de fecha como el último día del año siguiente (2024)
+                        fechaInput.max = `${maxYear}-12-31`;
                     </script>
                     <div class="form-group">
                         <label for="hora">Hora</label>
@@ -143,34 +141,10 @@
 
                         actualizarHoras();
                     </script>
-                    <!-- scripts marc que no funciona no se porque -->
-                    <!-- <script>
-                        // Obtener el elemento select
-                        var selectElement = document.getElementById("hora");
-                
-                        // Obtener la hora actual
-                        var currentTime = new Date();
-                        var currentHour = currentTime.getHours();
-                        var currentMinutes = currentTime.getMinutes();
-                
-                        // Convertir la hora actual a un formato comparable (HH:mm)
-                        var currentFormattedTime = currentHour + ":" + (currentMinutes < 10 ? "0" : "") + currentMinutes;
-                
-                        // Recorrer las opciones y eliminar las que ya han pasado
-                        for (var i = selectElement.options.length - 1; i >= 0; i--) {
-                            var optionValue = selectElement.options[i].value;
-                
-                            // Comparar la hora actual con la hora de la opción
-                            if (optionValue !== "" && optionValue <= currentFormattedTime) {
-                                selectElement.remove(i);
-                            }
-                        }
-                    </script> -->
                     <div class="form-group">
                         <label for="cantidad">Cantidad de personas:</label>
                         <input type="number" id="cantidad" name="cantidad" min="1" max="20" required>
                         <span class="message">Por favor, contacte con el restaurante si son más de 20 personas.</span>
-
                     </div>
                     <div class="form-group">
                         <label for="email">Correo electrónico:</label>
@@ -195,16 +169,6 @@
 
                     <button id="enviarBtn"> <span>Enviar</span></button>
                 </div>
-                <script>
-                    // Obtener el elemento de fecha
-                    var fechaInput = document.getElementById('fecha');
-
-                    // Obtener la fecha actual en formato ISO (YYYY-MM-DD)
-                    var fechaActual = new Date().toISOString().split('T')[0];
-
-                    // Establecer el valor mínimo de fecha en el input de fecha
-                    fechaInput.min = fechaActual;
-                </script>
             </form>
         </div>
     </div>

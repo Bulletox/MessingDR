@@ -29,12 +29,6 @@
                 <li id="s5">
                     <img src="img/imglanding/chihiro/fuera.jpg" alt="Screen 4">
                 </li>
-                <!-- <li id="s6">
-            <p>Screen 6</p>
-        </li>
-        <li id="s7">
-            <p>Screen 7</p>
-        </li> -->
             </ul>
             <div class="pagination"></div>
 
@@ -52,29 +46,25 @@
                         <input type="date" id="fecha" name="fecha" required onkeydown="return false">
                     </div>
                     <script>
-                        function obtenerFechaActual() {
-                            const today = new Date();
-                            const year = today.getFullYear();
-                            let month = today.getMonth() + 1;
-                            let day = today.getDate();
-                        
-                            month = month < 10 ? '0' + month : month;
-                            day = day < 10 ? '0' + day : day;
-                        
-                            return `${year}-${month}-${day}`;
-                        }
-                        
                         const fechaInput = document.getElementById('fecha');
-                        const year = new Date().getFullYear();
-                        const nextYear = year + 3;
-                        
-                        // Establecer la fecha mínima en el campo de fecha como el primer día del año actual (2023)
-                        fechaInput.min = `${year}-01-01`;
-                        
+                        const today = new Date();
+                        const year = today.getFullYear();
+                        let month = today.getMonth() + 1;
+                        let day = today.getDate();
+                    
+                        month = month < 10 ? '0' + month : month;
+                        day = day < 10 ? '0' + day : day;
+                    
+                        const fechaActual = `${year}-${month}-${day}`;
+                        const maxYear = year + 2; // Cambiado a un año desde la fecha actual
+                    
+                        // Establecer la fecha mínima en el campo de fecha como la fecha actual
+                        fechaInput.min = fechaActual;
+                    
                         // Establecer la fecha máxima en el campo de fecha como el último día del año siguiente (2024)
-                        fechaInput.max = `${nextYear}-12-31`;
-                        
+                        fechaInput.max = `${maxYear}-12-31`;
                     </script>
+                    
                     <div class="form-group">
                         <label for="hora">Hora</label>
                         <select name="hora" id="hora" required>
@@ -179,17 +169,7 @@
 
                     <button type="submit" id="enviarBtn"> <span>Enviar</span></button>
                 </div>
-                <script>
-
-                    // Obtener el elemento de fecha
-                    var fechaInput = document.getElementById('fecha');
-
-                    // Obtener la fecha actual en formato ISO (YYYY-MM-DD)
-                    var fechaActual = new Date().toISOString().split('T')[0];
-
-                    // Establecer el valor mínimo de fecha en el input de fecha
-                    fechaInput.min = fechaActual;
-                </script>
+          
             </form>
         </div>
     </div>
@@ -217,4 +197,3 @@
 </body>
 
 </html>
-<!-- kakakakak -->
