@@ -36,25 +36,26 @@
             <div class="user_options-forms" id="user_options-forms">
                 <div class="user_forms-login">
                     <h2 class="forms_title">Login</h2>
-                    <form class="forms_form">
+                    <form class="forms_form" action="phps/loginphp.php" method="post">
                         <fieldset class="forms_fieldset">
                             <div class="forms_field">
-                                <input type="text" placeholder="Restaurante" class="forms_field-input" required
-                                    autofocus />
+                                <input type="text" name="restaurante" placeholder="Restaurante"
+                                    class="forms_field-input" required autofocus />
                             </div>
                             <div class="forms_field">
-                                <input type="email" placeholder="Email" class="forms_field-input" required />
+                                <input type="email" name="username" placeholder="Username" class="forms_field-input"
+                                    required />
                             </div>
                             <div class="forms_field">
-                                <input type="password" placeholder="Password" class="forms_field-input" required />             
+                                <input type="password" name="password" placeholder="Password" class="forms_field-input"
+                                    required />
                             </div>
                         </fieldset>
                         <div class="forms_buttons">
                             <button type="button" class="forms_buttons-forgot">Forgot password?</button>
-                            <a href="indexPC.php" class="forms_buttons-action">
-                                Login
-                            </a>
+                            <button type="submit" class="forms_buttons-action">Login</button>
                         </div>
+
                     </form>
 
                 </div>
