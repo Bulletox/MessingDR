@@ -11,18 +11,22 @@ $password = $_POST['password'];
 
 
 // Consulta SQL para obtener el hash de la contraseña
-$consulta = "SELECT password_hash FROM restaurante WHERE correo_restaurante = '$username'";
+$consulta = "SELECT password_hash, id_restaurante, nombre_restaurante FROM restaurante WHERE correo_restaurante = '$username'";
 $resultado = $conexion->query($consulta);
 
 if ($resultado->num_rows == 1) {
     $fila = $resultado->fetch_assoc();
     $hashAlmacenado = $fila['password_hash'];
-
+    $id_restaurante = $fila['id_restaurante'];
+    $nombre_restaurante = $fila['nombre_restaurante'];
     // Verificar la contraseña con password_verify
     if (password_verify($password, $hashAlmacenado)) {
         // Inicio de sesión exitoso
         //$_SESSION['username'] = $username;
         $_SESSION['username'] = "$username";
+        $_SESSION['id_restaurante'] = "$id_restaurante";
+        $_SESSION['nombre_restaurante'] = "$nombre_restaurante";
+       // $_SESSION['id_restaurante'] = 1;
         header("Location: ../indexPC.php"); // Redirecciona a la página de inicio
     } else {
         // Inicio de sesión fallido
