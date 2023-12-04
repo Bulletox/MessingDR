@@ -80,7 +80,39 @@ document.addEventListener("DOMContentLoaded", () => {
       this.value = '';
     }
   });
-  
+  //validar entrada 
+  document.addEventListener('DOMContentLoaded', function () {
+    const formulario = document.querySelector('form');
+
+    formulario.addEventListener('submit', function (event) {
+        event.preventDefault(); // Evitar el envío del formulario por defecto
+
+        const nombre = document.getElementById('nombre').value;
+        const fecha = document.getElementById('fecha').value;
+        
+        // Expresión regular para validar el nombre (solo letras y espacios)
+        const nombreRegex = /^[a-zA-Z\sáéíóúÁÉÍÓÚüÜñÑ]+$/;
+
+        // Expresión regular para validar el año actual y el siguiente
+        const fechaRegex = new RegExp(`^${new Date().getFullYear()}|${new Date().getFullYear() + 1}-\\d{2}-\\d{2}$`);
+
+        // Validación del nombre
+        if (!nombre.match(nombreRegex)) {
+            alert('El nombre no debe contener números ni caracteres especiales.');
+            return;
+        }
+
+        // Validación de la fecha
+        if (!fecha.match(fechaRegex)) {
+            alert('Selecciona una fecha válida del año actual o siguiente.');
+            return;
+        }
+
+        // Si la validación es exitosa, podrías enviar el formulario aquí
+        // formulario.submit(); // Descomenta esta línea para enviar el formulario realmente
+    });
+});
+
   const cantidadInput = document.getElementById('cantidad');
   const message = document.querySelector('.message');
   
@@ -127,8 +159,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     showPopup(mensaje);
 
-    // Agregar un tiempo de espera antes de redirigir para asegurar que se muestre el mensaje
+    
     setTimeout(() => {
-        window.location.href = 'index.html'; // Reemplaza 'ruta_a_tu_index.html' con la ruta correcta
-    }, 2000); // Espera 2 segundos antes de redirigir (ajusta según sea necesario).
+        window.location.href = 'index.html'; 
+    }, 2000); 
 });

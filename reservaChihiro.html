@@ -57,17 +57,23 @@
                             const year = today.getFullYear();
                             let month = today.getMonth() + 1;
                             let day = today.getDate();
-
+                        
                             month = month < 10 ? '0' + month : month;
                             day = day < 10 ? '0' + day : day;
-
+                        
                             return `${year}-${month}-${day}`;
                         }
-
+                        
                         const fechaInput = document.getElementById('fecha');
-
-                        // Establecer la fecha mínima en el campo de fecha
-                        fechaInput.min = obtenerFechaActual();
+                        const year = new Date().getFullYear();
+                        const nextYear = year + 3;
+                        
+                        // Establecer la fecha mínima en el campo de fecha como el primer día del año actual (2023)
+                        fechaInput.min = `${year}-01-01`;
+                        
+                        // Establecer la fecha máxima en el campo de fecha como el último día del año siguiente (2024)
+                        fechaInput.max = `${nextYear}-12-31`;
+                        
                     </script>
                     <div class="form-group">
                         <label for="hora">Hora</label>
