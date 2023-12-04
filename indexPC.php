@@ -1,4 +1,14 @@
 <?php
+session_start() or die('Error iniciando gestor de variables de sesión');;
+
+// Verificar si el usuario está autenticado
+if (!isset($_SESSION['username'])) {
+    //header("Location: index.html"); // Redirecciona a la página de inicio de sesión si no está autenticado
+    header('Location: login.php');
+}
+
+$username = $_SESSION['username'];
+
 
 include "phps/Conexion_BBDD.php";
 function obtenerReservas() {
