@@ -106,8 +106,8 @@
                             var currentFormattedTime = currentHour + ":" + (currentMinutes < 10 ? "0" : "") + currentMinutes;
 
                             if (currentHour >= 0 && currentHour <= 4) { // Restablecer opciones a medianoche (de 0 a 4 horas)
-                                selectElement.innerHTML = ''; // Limpiar todas las opciones               
-                                // Volver a agregar todas las opciones
+                                selectElement.innerHTML = ''; // esto limpia y agrega las horas otra vez NOTOCAR            
+                                
                                 selectElement.innerHTML += `
                                     <optgroup label="Horarios de Almuerzo">
                                         <option value="13:00">13:00</option>
@@ -189,6 +189,9 @@
         </div>
         <div class="formulario">
             <h1>CARTA</h1>
+          
+            <h1>HORARIOS</h1>
+            <p>Lunes a Domingo: 13:00 - 16:00 y 20:00 - 23:00</p>
         </div>
     </div>
     <script src="js/reserva.js"></script>
