@@ -84,5 +84,5 @@ try {
     echo 'Excepción capturada: ',  $e->getMessage(), "\n";
 }
 
-header("Location: ../index.html");
+header("Location: ../reservaconfirmada.html");
 ?>

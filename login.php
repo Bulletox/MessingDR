@@ -61,16 +61,16 @@
                 </div>
                 <div class="user_forms-signup">
                     <h2 class="forms_title">Sign Up</h2>
-                    <form class="forms_form">
+                    <form action="phps/singin.php" method="post" class="forms_form">
                         <fieldset class="forms_fieldset">
                             <div class="forms_field">
-                                <input type="text" placeholder="Restaurante" class="forms_field-input" required />
+                                <input type="text" placeholder="Restaurante" name="nombre_restaurante" class="forms_field-input" required />
                             </div>
                             <div class="forms_field">
-                                <input type="email" placeholder="Email" class="forms_field-input" required />
+                                <input type="email" placeholder="Email" name="correo_restaurante" class="forms_field-input" required />
                             </div>
                             <div class="forms_field">
-                                <input type="password" placeholder="Password" class="forms_field-input" required />
+                                <input type="password" placeholder="Password" name="password" class="forms_field-input" required />
                             </div>
                         </fieldset>
                         <div class="forms_buttons">

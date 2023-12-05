@@ -402,7 +402,7 @@ function obtenerReservas() {
                                     });
                                     function eliminarReserva(idReserva) {
                                         // Utiliza la función confirm para mostrar una ventana emergente
-                                        var confirmacion = confirm("¿Estás seguro de que deseas CANCELAR esta reserva?");
+                                        var confirmacion = confirm("¿Estás seguro de que deseas eliminar esta reserva?");
 
                                         // Si el usuario hace clic en "Aceptar", entonces realiza la eliminación
                                         if (confirmacion) {
