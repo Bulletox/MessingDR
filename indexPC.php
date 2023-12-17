@@ -3,7 +3,7 @@ session_start() or die('Error iniciando gestor de variables de sesión');
 ;
 
 // Verificar si el usuario está autenticado
-if(!isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) {
     //header("Location: index.html"); // Redirecciona a la página de inicio de sesión si no está autenticado
     header('Location: login.php');
 }
@@ -13,7 +13,8 @@ $id_restaurante = $_SESSION['id_restaurante'];
 $nombre_restaurante = $_SESSION['nombre_restaurante'];
 include "phps/Conexion_BBDD.php";
 
-function obtenerReservas() {
+function obtenerReservas()
+{
     // Obtener la conexión
     $conn = conectarBaseDeDatos();
     $id_restaurante = $_SESSION["id_restaurante"];
@@ -22,7 +23,7 @@ function obtenerReservas() {
 
     // Calcular la fecha y hora 1 hora atrás
     $fechaHoraHaceUnaHora = date("Y-m-d H:i:s", strtotime("-1 hour", strtotime($fechaHoraActual)));
-//uso corriente de la funcion:
+    //uso corriente de la funcion:
     // $sql = "SELECT usuario.nombre, reservas.num_personas, reservas.fecha, reservas.hora, usuario.id_usuario, reservas.id_reserva
     //         FROM reservas
     //         INNER JOIN usuario ON reservas.id_usuario = usuario.id_usuario
@@ -41,7 +42,8 @@ function obtenerReservas() {
     return $result;
 }
 
-function obtenerNumeroReservasDelDia() {
+function obtenerNumeroReservasDelDia()
+{
     // Obtener la conexión
     $conn = conectarBaseDeDatos();
     $id_restaurante = $_SESSION["id_restaurante"];
@@ -56,8 +58,8 @@ function obtenerNumeroReservasDelDia() {
     $result = $conn->query($sql);
 
     // Verificar si la consulta fue exitosa
-    if($result === false) {
-        die("Error en la consulta: ".$conn->error);
+    if ($result === false) {
+        die("Error en la consulta: " . $conn->error);
     }
 
     // Obtener el número de reservas del día en curso
@@ -68,7 +70,8 @@ function obtenerNumeroReservasDelDia() {
 
     return $numeroReservas;
 }
-function obtenerNumeroPendientes() {
+function obtenerNumeroPendientes()
+{
     // Obtener la conexión
     $conn = conectarBaseDeDatos();
     $id_restaurante = $_SESSION["id_restaurante"];
@@ -81,8 +84,8 @@ function obtenerNumeroPendientes() {
     $result = $conn->query($sql);
 
     // Verificar si la consulta fue exitosa
-    if($result === false) {
-        die("Error en la consulta: ".$conn->error);
+    if ($result === false) {
+        die("Error en la consulta: " . $conn->error);
     }
 
     // Obtener el número de reserves pendientes
@@ -93,6 +96,125 @@ function obtenerNumeroPendientes() {
 
     return $numeroPendientes;
 }
+function obtenerNumeroS()
+{
+    // Obtener la conexión
+    $conn = conectarBaseDeDatos();
+    $id_restaurante = $_SESSION["id_restaurante"];
+
+    // Obtener la hora actual en formato de 24 horas
+    $horaActual = date("H:i:s");
+
+    // Obtener la fecha actual
+    $fechaActual = date("Y-m-d");
+
+    // Definir las horas para el servicio de mañanas y tardes
+    $horaInicioMananas = "8:00:00";
+    $horaFinMananas = "15:30:00";
+    $horaInicioTardes = "20:00:00";
+    $horaFinTardes = "24:00:00";
+
+    // Verificar si estamos en el servicio de mañanas o tardes
+    if ($horaActual >= $horaInicioMananas && $horaActual <= $horaFinMananas) {
+        $horaInicio = $horaInicioMananas;
+        $horaFin = $horaFinMananas;
+    } elseif ($horaActual >= $horaInicioTardes && $horaActual <= $horaFinTardes) {
+        $horaInicio = $horaInicioTardes;
+        $horaFin = $horaFinTardes;
+    } else {
+        // Fuera de las horas de servicio, no hay reservas que mostrar
+        return "0";
+    }
+
+    // Construir la consulta SQL con la condición de tiempo y fecha específica
+    $sql = "SELECT COUNT(*) as totalReservas
+            FROM reservas
+            WHERE fecha = '$fechaActual' AND hora >= '$horaInicio' AND hora <= '$horaFin' AND estado = 1 AND id_restaurante = '$id_restaurante'";
+
+    $result = $conn->query($sql);
+
+    // Obtener el resultado como un array asociativo
+    $row = $result->fetch_assoc();
+
+    // Cerrar la conexión
+    $conn->close();
+
+    // Devolver el número de reservas
+    return $row['totalReservas'];
+}
+
+function obtenerPorcentajeAforo()
+{
+    // Obtener la conexión
+    $conn = conectarBaseDeDatos();
+    $id_restaurante = $_SESSION["id_restaurante"];
+
+    // Obtener la hora actual en formato de 24 horas
+    $horaActual = date("H:i:s");
+    
+    // Obtener la fecha actual
+    $fechaActual = date("Y-m-d");
+
+    // Consulta para obtener el aforo total del restaurante
+    $sqlAforo = "SELECT aforo_restaurante
+                 FROM restaurante
+                 WHERE id_restaurante = '$id_restaurante'";
+
+    $resultAforo = $conn->query($sqlAforo);
+
+    // Verificar si la consulta fue exitosa
+    if ($resultAforo === false) {
+        die("Error en la consulta de aforo: " . $conn->error);
+    }
+
+    // Obtener el aforo total del restaurante
+    $aforoTotal = $resultAforo->fetch_assoc()['aforo_restaurante'];
+
+    // Definir las horas para el servicio de mañanas y tardes
+    $horaInicioMananas = "13:00:00";
+    $horaFinMananas = "15:30:00";
+    $horaInicioTardes = "20:00:00";
+    $horaFinTardes = "24:00:00";
+
+    // Determinar el rango horario actual
+    if ($horaActual >= $horaInicioMananas && $horaActual <= $horaFinMananas) {
+        $horaInicio = $horaInicioMananas;
+        $horaFin = $horaFinMananas;
+    } elseif ($horaActual >= $horaInicioTardes && $horaActual <= $horaFinTardes) {
+        $horaInicio = $horaInicioTardes;
+        $horaFin = $horaFinTardes;
+    } else {
+        // Fuera de las horas de servicio, el porcentaje de aforo es 0
+        $conn->close();
+        return 0;
+    }
+
+    // Consulta para obtener el total de personas por reservas confirmadas del día en curso y dentro del rango horario
+    $sqlPersonas = "SELECT SUM(num_personas) as totalPersonas
+                    FROM reservas
+                    WHERE estado = 1 AND id_restaurante = '$id_restaurante' AND fecha = '$fechaActual' AND hora >= '$horaInicio' AND hora <= '$horaFin'";
+
+    $resultPersonas = $conn->query($sqlPersonas);
+
+    // Verificar si la consulta fue exitosa
+    if ($resultPersonas === false) {
+        die("Error en la consulta de personas: " . $conn->error);
+    }
+
+    // Obtener el total de personas por reservas confirmadas dentro del rango horario
+    $totalPersonas = $resultPersonas->fetch_assoc()['totalPersonas'];
+
+    // Calcular el porcentaje de aforo
+    $porcentajeAforo = ($totalPersonas / $aforoTotal) * 100;
+
+    // Cerrar la conexión
+    $conn->close();
+
+    return $porcentajeAforo;
+}
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="dark">
@@ -250,7 +372,7 @@ function obtenerNumeroPendientes() {
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
-                                    Alerts Center
+                                    Centro de Alertas
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
@@ -259,8 +381,9 @@ function obtenerNumeroPendientes() {
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        <div class="small text-gray-500">12 de diciembre de 2023</div>
+                                        <span class="font-weight-bold">¡Un nuevo informe mensual está listo para
+                                            descargar!</span>
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -270,8 +393,8 @@ function obtenerNumeroPendientes() {
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
+                                        <div class="small text-gray-500">7 de diciembre de 2023</div>
+                                        ¡Se han depositado $290.29 en tu cuenta!
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -281,12 +404,14 @@ function obtenerNumeroPendientes() {
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
+                                        <div class="small text-gray-500">2 de diciembre de 2023</div>
+                                        Alerta de Gasto: Hemos notado un gasto inusualmente alto en tu cuenta.
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Mostrar Todas las
+                                    Alertas</a>
                             </div>
+
                         </li>
 
                         <!-- Nav Item - Messages -->
@@ -294,14 +419,14 @@ function obtenerNumeroPendientes() {
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
+                                <!-- Contador - Mensajes -->
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
-                            <!-- Dropdown - Messages -->
+                            <!-- Desplegable - Mensajes -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
-                                    Message Center
+                                    Centro de Mensajes
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
@@ -309,8 +434,8 @@ function obtenerNumeroPendientes() {
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
+                                        <div class="text-truncate">¡Hola! Me preguntaba si puedes ayudarme con un
+                                            problema que he estado teniendo.</div>
                                         <div class="small text-gray-500">Emily Fowler · 58m</div>
                                     </div>
                                 </a>
@@ -320,8 +445,8 @@ function obtenerNumeroPendientes() {
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
+                                        <div class="text-truncate">Tengo las fotos que pediste el mes pasado, ¿cómo te
+                                            gustaría que te las enviara?</div>
                                         <div class="small text-gray-500">Jae Chun · 1d</div>
                                     </div>
                                 </a>
@@ -331,8 +456,8 @@ function obtenerNumeroPendientes() {
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
+                                        <div class="text-truncate">El informe del mes pasado se ve genial, estoy muy
+                                            contento con el progreso hasta ahora, ¡sigue así!</div>
                                         <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                                     </div>
                                 </a>
@@ -343,14 +468,16 @@ function obtenerNumeroPendientes() {
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
+                                        <div class="text-truncate">¿Soy un buen chico? La razón por la que pregunto es
+                                            porque alguien me dijo que la gente dice esto a todos los perros, incluso si
+                                            no son buenos...</div>
                                         <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Leer Más Mensajes</a>
                             </div>
                         </li>
+
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -401,7 +528,7 @@ function obtenerNumeroPendientes() {
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    <div id="datos" class="row">
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -411,7 +538,12 @@ function obtenerNumeroPendientes() {
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Reservas Servico en curso</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">7</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                $numeroobtenerNumeroS = obtenerNumeroS();
+                                                echo "$numeroobtenerNumeroS";
+                                                ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -454,12 +586,18 @@ function obtenerNumeroPendientes() {
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">70%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php
+                                                $PorcentajeAforo = obtenerPorcentajeAforo();
+                                                echo "$PorcentajeAforo";
+                                                ?>%</div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
                                                         <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 70%" aria-valuenow="50" aria-valuemin="0"
+                                                            style="width: <?php
+                                                $PorcentajeAforo = obtenerPorcentajeAforo();
+                                                echo "$PorcentajeAforo";
+                                                ?>%" aria-valuenow="50" aria-valuemin="0"
                                                             aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -474,7 +612,7 @@ function obtenerNumeroPendientes() {
                         </div>
 
                         <!-- Pending Requests Card Example -->
-                        <div id = "#recargaP" class="col-xl-3 col-md-6 mb-4">
+                        <div id="#recargaP" class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -519,20 +657,20 @@ function obtenerNumeroPendientes() {
                                         <?php
                                         $id_restaurante = $_SESSION['id_restaurante'];
                                         $reservas = obtenerReservas();
-                                        if($reservas->num_rows > 0) {
-                                            while($row = $reservas->fetch_assoc()) {
+                                        if ($reservas->num_rows > 0) {
+                                            while ($row = $reservas->fetch_assoc()) {
                                                 echo "<tr>
-                                                        <td>".$row["nombre"]."</td>
-                                                        <td>".$row["num_personas"]."</td>
-                                                        <td>".$row["fecha"]."</td>
-                                                        <td>".$row["hora"]."</td>
-                                                        <td>
-                                                            <a href=\"#\" class=\"btn btn-success btn-icon-split\">
+                                                        <td>" . $row["nombre"] . "</td>
+                                                        <td>" . $row["num_personas"] . "</td>
+                                                        <td>" . $row["fecha"] . "</td>
+                                                        <td>" . $row["hora"] . "</td>
+                                                        <td class=\"text-center\">
+                                                            <a href=\"#\" class=\"btn btn-success btn-icon-split\" onclick=\"confirmarReserva(" . $row["id_reserva"] . ")\">
                                                                 <span class=\"icon text-white-100\">
                                                                     <i class=\"fas fa-check\"></i>
                                                                 </span>
                                                             </a>
-                                                            <a href=\"#\" class=\"btn btn-danger btn-icon-split\" onclick=\"eliminarReserva(".$row["id_reserva"].")\">
+                                                            <a href=\"#\" class=\"btn btn-danger btn-icon-split\" onclick=\"eliminarReserva(" . $row["id_reserva"] . ")\">
                                                                 <span class=\"icon text-white-100\">
                                                                     <i class=\"fas fa-trash\"></i>
                                                                 </span>
@@ -571,6 +709,16 @@ function obtenerNumeroPendientes() {
                                             //$.getScript("js/tdata.js");
                                         }, 50000);
                                     });
+                                    //actualiza los datos de arriba 
+                                    $(document).ready(function () {
+                                        // Función para actualizar la sección con id="datos"
+                                        function actualizarDatos() {
+                                            $("#datos").load("indexPC.php #datos > *");
+                                        }
+
+                                        // Actualizar cada x segundos (en este caso, 5000 milisegundos = 5 segundos)
+                                        setInterval(actualizarDatos, 5000);
+                                    });
                                     function eliminarReserva(idReserva) {
                                         // Utiliza la función confirm para mostrar una ventana emergente
                                         var confirmacion = confirm("¿Estás seguro de que deseas eliminar esta reserva?");
@@ -603,7 +751,38 @@ function obtenerNumeroPendientes() {
                                             console.log("Eliminación cancelada.");
                                         }
                                     }
+                                    function confirmarReserva(idReserva) {
+                                        // Utiliza la función confirm para mostrar una ventana emergente
+                                        var confirmacion = confirm("¿Estás seguro de que deseas CONFIRMAR esta reserva?");
 
+                                        // Si el usuario hace clic en "Aceptar", entonces realiza la eliminación
+                                        if (confirmacion) {
+                                            $.ajax({
+                                                url: 'phps/eliminar_reserva.php',
+                                                type: 'POST',
+                                                data: { idReserva: idReserva },
+                                                success: function (response) {
+                                                    console.log(response);
+                                                    var dataTableSA = $("#dataTableSA").DataTable();
+                                                    console.log(idReserva + " eliminado");
+                                                    $("#recarga").load("indexPC.php #recarga", function () {
+                                                        dataTableSA.destroy();
+                                                        $("#dataTableSA").DataTable({
+                                                            "language": {
+                                                                "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                                                            },
+                                                            "order": [[2, 'asc'], [3, 'asc']]
+                                                        });
+                                                    });
+                                                },
+                                                error: function (error) {
+                                                    console.error('Error al eliminar reserva:', error);
+                                                }
+                                            });
+                                        } else {
+                                            console.log("Eliminación cancelada.");
+                                        }
+                                    }
                                 </script>
                             </div>
                         </div>
@@ -675,8 +854,6 @@ function obtenerNumeroPendientes() {
                     });
                 });
                 console.log(1);
-
-                //$.getScript("js/tdata.js");
             }, 5000);
         });
     </script>
