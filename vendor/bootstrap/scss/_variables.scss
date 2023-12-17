@@ -43,7 +43,7 @@ $yellow:  #ffc107 !default;
 $green:   #28a745 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
-
+$seagreen: #2E8B57 !default;
 $colors: () !default;
 $colors: map-merge(
   (
@@ -60,11 +60,12 @@ $colors: map-merge(
     "white":      $white,
     "gray":       $gray-600,
     "gray-dark":  $gray-800
+    "seagreen":   $seagreen
   ),
   $colors
 );
 
-$primary:       $blue !default;
+$primary:       $seagreen !default;
 $secondary:     $gray-600 !default;
 $success:       $green !default;
 $info:          $cyan !default;
