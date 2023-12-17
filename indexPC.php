@@ -522,7 +522,7 @@ function obtenerNumeroPendientes() {
                                         if($reservas->num_rows > 0) {
                                             while($row = $reservas->fetch_assoc()) {
                                                 echo "<tr>
-                                                        <td>".$row["nombre"]."$id_restaurante</td>
+                                                        <td>".$row["nombre"]."</td>
                                                         <td>".$row["num_personas"]."</td>
                                                         <td>".$row["fecha"]."</td>
                                                         <td>".$row["hora"]."</td>
