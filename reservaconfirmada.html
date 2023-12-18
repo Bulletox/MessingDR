@@ -23,35 +23,95 @@
         <div class="confetti-piece"></div>
         <div class="confetti-piece"></div>
         <div class="confetti-piece"></div>
-        <header>
-            <div class="container">
-                <a href="#" class="logo"><b>MESSING</b></a>
-
-            </div>
-        </header>
+   
       </div>
     <div class="landing-page">
         
         <div class="content">
             <div class="container">
-                <div class="info">
-                    <h1>Tu reserva a sido confirmada</h1>
-                    <p></p>
-                    <button onclick="redirigirAInicio()">¿Otra reserva?</button>
-
-                    <script>
-                        function redirigirAInicio() {
-                            window.location.href = "index.html";
-                        }
-                    </script>
+                <div class="confirmation-message">
+                    <h1>¡Reserva Confirmada!</h1>
+                    <p>Tu reserva ha sido confirmada correctamente.</p>
+                    <p>Gracias por confiar en Messing.</p>
+                    <a href="index.html" class="back-button">Volver a Inicio</a>
                 </div>
                 <div class="image">
-                    <img src="https://i.postimg.cc/65QxYYzh/001234.png">
+                    <img src="img/logo/logo.png">
                 </div>
             </div>
         </div>
     </div>
     <!-- End Landing Page -->
 </body>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+            font-size: 200%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            width: 10px;
+            height: 10px;
+            background-color: #e3d32a;
+            position: absolute;
+            animation: confetti-fall 3s infinite ease-in-out;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+
+    .confirmation-message {
+        text-align: center;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .back-button {
+    display: block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #198754;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+    position: relative;
+    z-index: 9999; /* Asegúrate de que sea mayor que otros elementos */
+}
+
+
+    .back-button:hover {
+        background-color: #146c43;
+    }
+</style>
 
 </html>

@@ -14,11 +14,10 @@ body {
 }
 
 header {
-background-color: #198754de; 
-padding: 20px 0;
-margin-top: 0 !important;
+  background-color: #198754de; 
+  padding: 35px 0;
+  margin-top: 0 !important; 
 }
-
 
 header h1 {
 color: rgb(255, 255, 255); 
@@ -252,7 +251,7 @@ button {
   font-size: 17px;
   border-radius: 500px;
   overflow: hidden;
-  background: #0077ff;
+  background: #348669;
   color: ghostwhite;
  }
  
