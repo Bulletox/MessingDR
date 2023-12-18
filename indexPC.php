@@ -151,7 +151,7 @@ function obtenerPorcentajeAforo()
 
     // Obtener la hora actual en formato de 24 horas
     $horaActual = date("H:i:s");
-    
+
     // Obtener la fecha actual
     $fechaActual = date("Y-m-d");
 
@@ -251,7 +251,12 @@ function obtenerPorcentajeAforo()
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+            <style>
+                .bg-gradient-primary {
+                    background: #198754;
+                    /* Cambia este valor al color que desees */
+                }
+            </style>
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="indexPC.html">
                 <div class="sidebar-brand-icon ">
@@ -275,7 +280,7 @@ function obtenerPorcentajeAforo()
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
                 <a class="nav-link" href="">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-clipboard-list"></i>
                     <span>Dashboard</span></a>
             </li>
 
@@ -283,19 +288,25 @@ function obtenerPorcentajeAforo()
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
                 <a class="nav-link" href="pendiente.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-calendar"></i>
                     <span>Pendientes</span></a>
             </li>
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <hr class="sidebar-divider my-0 ">
             <li class="nav-item">
-                <a class="nav-link" href="pendiente.html">
+                <a class="nav-link" href="pendiente.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>KPI</span></a>
             </li>
             <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-cogs"></i>
+                    <span>Mi Website</span></a>
+            </li>
+            <!-- Divider -->
             <hr class="sidebar-divider">
-
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -586,19 +597,19 @@ function obtenerPorcentajeAforo()
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php
-                                                $PorcentajeAforo = obtenerPorcentajeAforo();
-                                                echo "$PorcentajeAforo";
-                                                ?>%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                        <?php
+                                                        $PorcentajeAforo = obtenerPorcentajeAforo();
+                                                        echo "$PorcentajeAforo";
+                                                        ?>%
+                                                    </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: <?php
-                                                $PorcentajeAforo = obtenerPorcentajeAforo();
-                                                echo "$PorcentajeAforo";
-                                                ?>%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
+                                                        <div class="progress-bar bg-info" role="progressbar" style="width: <?php
+                                                        $PorcentajeAforo = obtenerPorcentajeAforo();
+                                                        echo "$PorcentajeAforo";
+                                                        ?>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -692,7 +703,7 @@ function obtenerPorcentajeAforo()
                                         var dataTableSA = $("#dataTableSA").DataTable(); // Guarda la referencia a la instancia DataTable
 
                                         setInterval(function () {
-                                            $("#recarga").load("indexPC.php #recarga", function () {
+                                            $("#recarga").load("indexPC.php #recarga > *", function () {
                                                 // Destruye la tabla actual antes de la recarga
                                                 dataTableSA.destroy();
 
@@ -818,23 +829,24 @@ function obtenerPorcentajeAforo()
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="phps/logout.php">Logout</a>
-                </div>
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Listo para irte?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Selecciona "Cerrar sesión" a continuación si estás listo para finalizar tu sesión actual.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-primary" href="phps/logout.php">Cerrar sesión</a>
             </div>
         </div>
     </div>
+</div>
+
 
     <script type="text/javascript">
         $(document).ready(function () {
