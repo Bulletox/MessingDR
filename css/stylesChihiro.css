@@ -12,7 +12,26 @@ body {
     text-align: left;
   
   }
-  
+
+header {
+  background-color: #198754de; 
+  padding: 35px 0;
+  margin-top: 0 !important; 
+}
+
+
+header h1 {
+  color: rgb(255, 255, 255); 
+  margin: 0; 
+  font-family: 'Noto Serif JP', serif;
+}
+
+
+body, h1, h2, h3, h4, h5, h6, p, ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
   .carrousel .screens {
     list-style: none;
     padding: 0;
@@ -144,7 +163,7 @@ body {
     background-size: cover;
     background-position: center;
   }
-  /* Estilos para el wrapper principal */
+
   .content-wrapper {
     display: flex;
     justify-content: space-between; 
@@ -152,23 +171,20 @@ body {
     margin: auto;
     padding: 20px;
   }
-/* MIRAR ESTO */
-  .formulario {
-    width: 35%; 
 
-  }
  
   .formulario {
     max-width: 400px;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f9f9f9;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
     font-family: Arial, sans-serif;
     width: 80%;
     margin: 0 auto;
   }
+  
+
   .form-row {
     display: flex;
     flex-wrap: wrap;
@@ -189,7 +205,7 @@ body {
     margin-bottom: 5px;
     font-weight: bold;
   }
-  /* kaka d baca */
+
   input[type="date"],
   select,
   input[type="number"],
@@ -216,11 +232,11 @@ body {
   
   .message {
     font-size: 14px;
-    color: #ff0000; /* Color rojo para destacar */
-    display: none; /* Ocultar el mensaje inicialmente */
+    color: #ff0000;
+    display: none; 
   }
   
-  /* --------boton enviar--------- */
+
   button {
     outline: none;
     cursor: pointer;
@@ -236,7 +252,7 @@ body {
     font-size: 17px;
     border-radius: 500px;
     overflow: hidden;
-    background: #0077ff;
+    background: #348669;
     color: ghostwhite;
    }
    
@@ -272,28 +288,48 @@ body {
    button:hover::before {
     transform: translate3d(100%, 0, 0);
    }
-   
-  /* Estilos para el contenedor de la ubicación */
-  .ubicacion {
-    width: 100%;
-    max-width: 800px; /* Ancho máximo */
-    margin: 20px auto; /* Margen para centrar */
-    margin-left: 200px; /* Ajusta este valor según tu preferencia */
-  
-  }
-  .abajo {
+   .abajo {
     display: flex;
-  }
-  
-  .ubicacion {
-    flex: 1;
-    margin-right: 225px; /* Ajusta el margen derecho según tu preferencia */
-  }
-  
-  .formulario {
-    flex: 1;
-    margin-left: 20px; /* Ajusta el margen izquierdo según tu preferencia */
-  }
+    justify-content: center;
+    align-items: center;
+}
+.abajo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contenido-info {
+  display: flex;
+  justify-content: space-between;
+  width: 95%; 
+}
+.formulario-2{
+  max-width: 60%; 
+  padding: 20px;
+  border-radius: 8px;
+  background-color: none;
+  font-family: Arial, sans-serif;
+  width: 80%;
+  margin: 0 auto;
+
+}
+
+.ubicacion {
+ width: 50%;
+ height: 70%; 
+  margin-left: 760px;
+ margin-bottom: 15px;
+ margin-top: -70px;
+}
+
+.letras{
+  color: #000000;
+  margin-left: -40em;
+  line-height: 3em;
+
+}
+
   .popup-overlay {
     display: none;
     position: fixed;

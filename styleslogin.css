@@ -193,7 +193,7 @@
    font-weight: 500;
    line-height: 1em;
    text-transform: uppercase;
-   color: #0077ff;
+   color: #348669;
    letter-spacing: .1rem;
  }
  
@@ -209,7 +209,7 @@
    font-family: "Montserrat", sans-serif;
    font-size: 1rem;
    font-weight: 300;
-   color: #0077ff;
+   color: #348669;
    letter-spacing: .1rem;
    transition: border-color .2s ease-in-out;
  }
@@ -238,7 +238,7 @@
  }
 
  .user_options-forms .forms_buttons-action {
-   background-color: #0077ff;
+   background-color: #348669;
    border-radius: 3px;
    padding: 10px 35px;
    font-size: 1rem;
@@ -251,7 +251,7 @@
  }
 
  .user_options-forms .forms_buttons-action:hover {
-   background-color: #0077ff;
+   background-color:#348669;
    text-decoration: none;
  }
 
