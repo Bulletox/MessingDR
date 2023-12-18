@@ -65,7 +65,12 @@ function obtenerReservas() {
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+        <style>
+                .bg-gradient-primary {
+                    background: #198754;
+                    /* Cambia este valor al color que desees */
+                }
+            </style>
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon ">
